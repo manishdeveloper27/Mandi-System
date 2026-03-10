@@ -1,0 +1,132 @@
+{
+  "Bihar": {
+    "Nalanda": {
+      "Bihar Sharif": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Paddy", "yesterday": { "min": 1950, "max": 2100 }, "today": { "min": 2000, "max": 2150 } },
+          { "name": "Wheat", "yesterday": { "min": 2200, "max": 2350 }, "today": { "min": 2250, "max": 2400 } },
+          { "name": "Mustard", "yesterday": { "min": 4800, "max": 5200 }, "today": { "min": 4900, "max": 5300 } }
+        ]
+      }
+    }
+  },
+
+  "Jharkhand": {
+    "Bokaro": {
+      "Bokaro Steel City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Paddy", "yesterday": { "min": 1900, "max": 2050 }, "today": { "min": 1950, "max": 2100 } },
+          { "name": "Wheat", "yesterday": { "min": 2150, "max": 2300 }, "today": { "min": 2200, "max": 2350 } },
+          { "name": "Mustard", "yesterday": { "min": 4700, "max": 5100 }, "today": { "min": 4800, "max": 5200 } }
+        ]
+      }
+    }
+  },
+
+  "Uttar Pradesh": {
+    "Lucknow": {
+      "Lucknow City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Paddy", "yesterday": { "min": 2000, "max": 2150 }, "today": { "min": 2050, "max": 2200 } },
+          { "name": "Wheat", "yesterday": { "min": 2300, "max": 2450 }, "today": { "min": 2350, "max": 2500 } },
+          { "name": "Mustard", "yesterday": { "min": 5000, "max": 5400 }, "today": { "min": 5100, "max": 5500 } }
+        ]
+      }
+    }
+  },
+
+  "Maharashtra": {
+    "Pune": {
+      "Pune City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Soybean", "yesterday": { "min": 4100, "max": 4300 }, "today": { "min": 4200, "max": 4400 } },
+          { "name": "Onion", "yesterday": { "min": 1500, "max": 1800 }, "today": { "min": 1600, "max": 1900 } },
+          { "name": "Wheat", "yesterday": { "min": 2400, "max": 2550 }, "today": { "min": 2450, "max": 2600 } }
+        ]
+      }
+    }
+  },
+
+  "Punjab": {
+    "Ludhiana": {
+      "Ludhiana City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Wheat", "yesterday": { "min": 2400, "max": 2600 }, "today": { "min": 2450, "max": 2650 } },
+          { "name": "Rice", "yesterday": { "min": 2100, "max": 2300 }, "today": { "min": 2150, "max": 2350 } },
+          { "name": "Maize", "yesterday": { "min": 1700, "max": 1900 }, "today": { "min": 1750, "max": 1950 } }
+        ]
+      }
+    }
+  },
+
+  "Haryana": {
+    "Karnal": {
+      "Karnal City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Rice", "yesterday": { "min": 2100, "max": 2250 }, "today": { "min": 2150, "max": 2300 } },
+          { "name": "Wheat", "yesterday": { "min": 2350, "max": 2500 }, "today": { "min": 2400, "max": 2550 } },
+          { "name": "Mustard", "yesterday": { "min": 4900, "max": 5200 }, "today": { "min": 5000, "max": 5300 } }
+        ]
+      }
+    }
+  },
+
+  "Rajasthan": {
+    "Jaipur": {
+      "Jaipur City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Mustard", "yesterday": { "min": 5100, "max": 5400 }, "today": { "min": 5200, "max": 5500 } },
+          { "name": "Wheat", "yesterday": { "min": 2300, "max": 2450 }, "today": { "min": 2350, "max": 2500 } },
+          { "name": "Barley", "yesterday": { "min": 1800, "max": 2000 }, "today": { "min": 1850, "max": 2050 } }
+        ]
+      }
+    }
+  },
+
+  "Madhya Pradesh": {
+    "Bhopal": {
+      "Bhopal City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Soybean", "yesterday": { "min": 4200, "max": 4500 }, "today": { "min": 4300, "max": 4600 } },
+          { "name": "Wheat", "yesterday": { "min": 2250, "max": 2400 }, "today": { "min": 2300, "max": 2450 } },
+          { "name": "Gram", "yesterday": { "min": 5000, "max": 5300 }, "today": { "min": 5100, "max": 5400 } }
+        ]
+      }
+    }
+  },
+
+  "West Bengal": {
+    "Hooghly": {
+      "Chinsurah": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Rice", "yesterday": { "min": 2000, "max": 2150 }, "today": { "min": 2050, "max": 2200 } },
+          { "name": "Potato", "yesterday": { "min": 1200, "max": 1500 }, "today": { "min": 1300, "max": 1600 } },
+          { "name": "Mustard", "yesterday": { "min": 4700, "max": 5000 }, "today": { "min": 4800, "max": 5100 } }
+        ]
+      }
+    }
+  },
+
+  "Gujarat": {
+    "Ahmedabad": {
+      "Ahmedabad City": {
+        "date": "28-02-2026",
+        "crops": [
+          { "name": "Cotton", "yesterday": { "min": 6500, "max": 7000 }, "today": { "min": 6600, "max": 7100 } },
+          { "name": "Groundnut", "yesterday": { "min": 5500, "max": 5800 }, "today": { "min": 5600, "max": 5900 } },
+          { "name": "Wheat", "yesterday": { "min": 2350, "max": 2500 }, "today": { "min": 2400, "max": 2550 } }
+        ]
+      }
+    }
+  }
+}
+

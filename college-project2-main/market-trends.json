@@ -1,0 +1,49 @@
+{
+  "last_updated": "2026-01-24",
+  "summary": {
+    "markets_tracked": 120,
+    "gainers_count": 18,
+    "fallers_count": 11
+  },
+  "top_gainers": [
+    {
+      "crop": "Cotton",
+      "mandi": "Adilabad Mandi",
+      "price": 8450,
+      "change": 320
+    },
+    {
+      "crop": "Wheat",
+      "mandi": "Indore Mandi",
+      "price": 2280,
+      "change": 90
+    },
+    {
+      "crop": "Chana",
+      "mandi": "Bhopal Mandi",
+      "price": 5620,
+      "change": 140
+    }
+  ],
+  "top_fallers": [
+    {
+      "crop": "Tomato",
+      "mandi": "Kolar Mandi",
+      "price": 920,
+      "change": -180
+    },
+    {
+      "crop": "Onion",
+      "mandi": "Lasalgaon Mandi",
+      "price": 1180,
+      "change": -70
+    },
+    {
+      "crop": "Potato",
+      "mandi": "Agra Mandi",
+      "price": 1020,
+      "change": -60
+    }
+  ],
+  "insight": "Price movements depend on arrivals, weather conditions, storage availability, and local demand."
+}

@@ -1,0 +1,11 @@
+{
+  "+919162243600": {
+    "otp": "123456",
+    "registered": true,
+    "name": "Ravi Kumar"
+  },
+  "+919111122223": {
+    "otp": "654321",
+    "registered": false
+  }
+}

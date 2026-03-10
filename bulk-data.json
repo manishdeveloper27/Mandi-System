@@ -1,0 +1,26 @@
+[
+  {
+    "state": "Bihar",
+    "district": "Patna",
+    "crop": "Paddy",
+    "arrivals": 1200,
+    "price": 2150,
+    "date": "01 Jan 2026"
+  },
+  {
+    "state": "Uttar Pradesh",
+    "district": "Kanpur",
+    "crop": "Wheat",
+    "arrivals": 980,
+    "price": 2275,
+    "date": "01 Jan 2026"
+  },
+  {
+    "state": "Madhya Pradesh",
+    "district": "Indore",
+    "crop": "Soybean",
+    "arrivals": 650,
+    "price": 4200,
+    "date": "01 Jan 2026"
+  }
+]

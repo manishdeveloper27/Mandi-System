@@ -1,0 +1,42 @@
+[
+  {
+    "crop": "Wheat",
+    "mandi": "Patna",
+    "min": 2100,
+    "max": 2300,
+    "modal": 2200,
+    "trend": "up"
+  },
+  {
+    "crop": "Wheat",
+    "mandi": "Gaya",
+    "min": 2050,
+    "max": 2250,
+    "modal": 2150,
+    "trend": "down"
+  },
+  {
+    "crop": "Wheat",
+    "mandi": "Kanpur",
+    "min": 2150,
+    "max": 2350,
+    "modal": 2250,
+    "trend": "up"
+  },
+  {
+    "crop": "Rice",
+    "mandi": "Patna",
+    "min": 1800,
+    "max": 2000,
+    "modal": 1900,
+    "trend": "up"
+  },
+  {
+    "crop": "Rice",
+    "mandi": "Gaya",
+    "min": 1750,
+    "max": 1950,
+    "modal": 1850,
+    "trend": "down"
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "prices": [
+    {
+      "mandi": "Bihar Sharif",
+      "crop": "Tomato",
+      "min": 1200,
+      "max": 1600,
+      "updatedMinutesAgo": 10
+    },
+    {
+      "mandi": "Patna City",
+      "crop": "Onion",
+      "min": 1800,
+      "max": 2200,
+      "updatedMinutesAgo": 25
+    },
+    {
+      "mandi": "Gaya",
+      "crop": "Potato",
+      "min": 900,
+      "max": 1300,
+      "updatedMinutesAgo": 5
+    },
+    {
+      "mandi": "Noorsarai",
+      "crop": "Potato",
+      "min": 800,
+      "max": 1300,
+      "updatedMinutesAgo": 5
+    },
+    {
+      "mandi": "Chandi",
+      "crop": "Potato",
+      "min": 7500,
+      "max": 1200,
+      "updatedMinutesAgo": 5
+    },
+    {
+      "mandi": "Hilsa",
+      "crop": "Phulgobi",
+      "min": 1000,
+      "max": 1200,
+      "updatedMinutesAgo": 5
+    }
+  ]
+}

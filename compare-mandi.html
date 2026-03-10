@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Mandi Prices</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- navbar section -->
+  <div class="bg-gray-100">
+    <header class="bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600
+             text-white border-b border-white/30
+             px-4 md:px-20 relative z-50
+             shadow-md">
+
+      <!-- NAVBAR GRID -->
+      <div class="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-center">
+  
+        <!-- LOGO -->
+        <div class="row-span-2 flex items-center px-2 md:px-10">
+          <img src="image/project logo.png" alt="MandiSystem Logo" class="h-14 md:h-20 w-auto md:scale-150 origin-left" />
+        </div>
+  
+        <!-- TITLE + LANGUAGE + MENU BUTTON -->
+        <div class="flex items-center justify-between py-2 border-b border-white/40">
+          <div class="leading-tight">
+            <h1 class="text-2xl md:text-4xl font-bold">MandiSystem</h1>
+            <p class="text-xs opacity-90">Local Mandi Price System</p>
+          </div>
+  
+          <div class="flex items-center gap-3">
+            <!-- Language -->
+            <select class="bg-white text-black text-sm px-3 py-1 rounded-md focus:outline-none hidden sm:block">
+              <option>English</option>
+              <option>हिंदी</option>
+            </select>
+  
+            <!-- Hamburger -->
+            <button id="menuBtn" class="md:hidden text-3xl focus:outline-none text-white">
+              ☰
+            </button>
+  
+          </div>
+        </div>
+  
+        <!-- DESKTOP MENU -->
+        <nav class="hidden md:flex gap-8 py-2 text-lg font-semibold">
+          <a href="index.html" class="hover:underline">Home</a>
+          <a href="mandiprices.html" class="hover:underline">Mandi Prices</a>
+          <a href="weather.html" class="hover:underline">Weather</a>
+          <a href="krishinews.html" class="hover:underline">Krishi Duniya</a>
+          <a href="videos.html" class="hover:underline">Videos</a>
+          <a href="farmer.html" class="hover:underline">Farmer</a>
+          <a href="wholesaler.html" class="hover:underline">Wholesaler</a>
+          <a href="govtpolicy.html" class="hover:underline">Govt. Policy</a>
+          <a href="biddingsystem.html" class="hover:underline">bidding system</a>
+        </nav>
+      </div>
+  
+      <!-- MOBILE MENU -->
+      <nav id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full
+              bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600 text-white px-6 py-4 space-y-1
+               font-semibold text-lg z-50 shadow-lg
+               transition-all duration-300">
+      
+        <a href="index.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Home
+        </a>
+      
+        <a href="mandiprices.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Mandi Prices
+        </a>
+      
+        <a href="weather.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Weather
+        </a>
+      
+        <a href="krishinews.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Krishi Duniya
+        </a>
+      
+        <a href="videos.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Videos
+        </a>
+      
+        <a href="farmer.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Farmer
+        </a>
+      
+        <a href="wholesaler.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Wholesaler
+        </a>
+      
+        <a href="govtpolicy.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          Govt. Policy
+        </a>
+      
+        <a href="biddingsystem.html" class="block px-3 py-2 rounded-lg
+                  hover:bg-white/20 hover:pl-6
+                  transition-all duration-300">
+          bidding system
+        </a>
+      </nav>
+    </header>
+  </div>
+
+    <div class="bg-gray-50 mt-10">
+        <!-- HEADER -->
+        <header class="bg-blue-700 text-white py-6 text-center max-w-7xl mx-auto px-6 rounded-3xl shadow-lg">
+            <h1 class="text-3xl font-bold">⚖️ Compare Mandi Prices</h1>
+            <p class="mt-2 text-blue-100">
+                Select two mandis to compare side by side
+            </p>
+        </header>
+    
+        <!-- FILTERS -->
+        <section class="max-w-5xl mx-auto px-6 py-6">
+            <div class="bg-white rounded-xl shadow p-6 grid gap-4 md:grid-cols-4">
+    
+                <select id="crop" class="border rounded-lg p-3">
+                    <option value="">Select Crop</option>
+                </select>
+    
+                <select id="mandiA" class="border rounded-lg p-3">
+                    <option value="">Mandi A</option>
+                </select>
+    
+                <select id="mandiB" class="border rounded-lg p-3">
+                    <option value="">Mandi B</option>
+                </select>
+    
+                <button onclick="compare()" class="bg-blue-700 text-white rounded-lg hover:bg-blue-800">
+                    Compare
+                </button>
+    
+            </div>
+        </section>
+    
+        <!-- COMPARISON LAYOUT -->
+        <section class="max-w-6xl mx-auto px-6 pb-10">
+            <div class="grid md:grid-cols-2 gap-8">
+    
+                <!-- MANDI A -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h2 id="titleA" class="text-xl font-bold text-blue-700 mb-6">
+                        🏪 Mandi A
+                    </h2>
+    
+                    <!-- Row -->
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Min Price</span>
+                        <span id="minA" class="font-semibold">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Max Price</span>
+                        <span id="maxA" class="font-semibold">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Modal Price</span>
+                        <span id="modalA" class="font-semibold text-blue-700">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4">
+                        <span class="text-gray-600">Trend</span>
+                        <span id="trendA">--</span>
+                    </div>
+                </div>
+    
+                <!-- MANDI B -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <h2 id="titleB" class="text-xl font-bold text-blue-700 mb-6">
+                        🏪 Mandi B
+                    </h2>
+    
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Min Price</span>
+                        <span id="minB" class="font-semibold">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Max Price</span>
+                        <span id="maxB" class="font-semibold">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4 border-b">
+                        <span class="text-gray-600">Modal Price</span>
+                        <span id="modalB" class="font-semibold text-blue-700">--</span>
+                    </div>
+    
+                    <div class="flex justify-between items-center py-4">
+                        <span class="text-gray-600">Trend</span>
+                        <span id="trendB">--</span>
+                    </div>
+                </div>
+    
+            </div>
+        </section>
+    </div>
+
+    <!-- footer section -->
+  <footer class="bg-gray-100 mt-5 border-t">
+  
+    <div class="px-20 py-12">
+  
+      <!-- TOP FOOTER GRID -->
+      <div class="grid grid-cols-4 gap-10">
+  
+        <!-- COLUMN 1: ABOUT -->
+        <div>
+          <!-- LOGO (you add image) -->
+          <div class="mb-4">
+            <!-- <img src="logo.png" class="h-8" /> -->
+            <h3 class="text-xl font-bold text-emerald-600">MandiSystem</h3>
+            <p class="text-xs text-gray-500">A division of Emperor pvt ltd</p>
+          </div>
+  
+          <p class="text-sm text-gray-700 leading-relaxed mb-6">
+            MandiSystem is a data led Agritech platform owned by Emperor pvt ltd.
+            Stay updated on the latest advancements in technology and innovation
+            shaping the farming and cultivation sector. Learn how modern
+            agriculture is transforming the industry. MandiSystem helps farmers,
+            Wholesaler, and Retailers to stay interconnected for better business
+            outcomes.
+          </p>
+  
+          <button class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-semibold">
+            Get MandiSystem App
+          </button>
+        </div>
+  
+        <!-- COLUMN 2: QUICK LINKS -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Quick Links</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <ul class="space-y-3 text-sm text-gray-700">
+            <li>Mandi Prices</li>
+            <li>Weather</li>
+            <li>Krishi Duniya</li>
+            <li>Videos</li>
+            <li>Farmer</li>
+            <li>Wholesaler</li>
+          </ul>
+        </div>
+  
+        <!-- COLUMN 3: USEFUL LINKS -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Useful Links</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <ul class="space-y-3 text-sm text-gray-700">
+            <li>About Us</li>
+            <li>Privacy Policy</li>
+            <li>Terms & Conditions</li>
+            <li>Contact Us</li>
+            <li>Blog</li>
+            <li>Sitemap</li>
+          </ul>
+        </div>
+  
+        <!-- COLUMN 4: GET IN TOUCH -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Get In Touch</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <p class="text-sm text-gray-700 mb-2">
+            <strong>Address:</strong> E-1/124, Emperor - 462016
+          </p>
+          <p class="text-sm text-gray-700 mb-2">
+            <strong>Phone:</strong> +91-98938160
+          </p>
+          <p class="text-sm text-gray-700 mb-6">
+            <strong>Email:</strong> ravikumar91622436@gmail.com
+          </p>
+  
+          <!-- SOCIAL ICONS (you add icons/images) -->
+          <div class="flex gap-3">
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- BOTTOM COPYRIGHT -->
+      <div class="mt-12 border-t pt-4 text-center text-sm text-gray-600 bg-transparent">
+        Copyright © MandiSystem. All Rights Reserved
+      </div>
+    </div>
+  
+    <!-- GRASS IMAGE AREA (you add image) -->
+    <div class="h-20">
+      <img src="image/footer.png" class="w-full h-full object-cover" />
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    let mandiData = [];
+
+    // Load JSON data
+    fetch("compare-mandi.json")
+      .then(res => res.json())
+      .then(data => {
+        mandiData = data;
+        populateDropdowns();
+      })
+      .catch(err => console.error("Error loading data:", err));
+
+    function populateDropdowns() {
+      const cropSelect = document.getElementById("crop");
+      const mandiA = document.getElementById("mandiA");
+      const mandiB = document.getElementById("mandiB");
+
+      const crops = [...new Set(mandiData.map(d => d.crop))];
+      const mandis = [...new Set(mandiData.map(d => d.mandi))];
+
+      crops.forEach(crop => {
+        cropSelect.innerHTML += `<option value="${crop}">${crop}</option>`;
+      });
+
+      mandis.forEach(mandi => {
+        mandiA.innerHTML += `<option value="${mandi}">${mandi}</option>`;
+        mandiB.innerHTML += `<option value="${mandi}">${mandi}</option>`;
+      });
+    }
+
+    function compare() {
+      const crop = document.getElementById("crop").value;
+      const mandiA = document.getElementById("mandiA").value;
+      const mandiB = document.getElementById("mandiB").value;
+
+      if (!crop || !mandiA || !mandiB || mandiA === mandiB) {
+        alert("Please select crop and two different mandis");
+        return;
+      }
+
+      const dataA = mandiData.find(d => d.crop === crop && d.mandi === mandiA);
+      const dataB = mandiData.find(d => d.crop === crop && d.mandi === mandiB);
+
+      fillCard("A", dataA);
+      fillCard("B", dataB);
+    }
+
+    function fillCard(side, data) {
+  if (!data) {
+    alert("No data found for selected mandi");
+    return;
+  }
+
+  // Title
+  document.getElementById(`title${side}`).innerText = `🏪 ${data.mandi}`;
+
+  // Prices
+  document.getElementById(`min${side}`).innerText = `₹${data.min}`;
+  document.getElementById(`max${side}`).innerText = `₹${data.max}`;
+  document.getElementById(`modal${side}`).innerText = `₹${data.modal}`;
+
+  // Trend
+  document.getElementById(`trend${side}`).innerHTML =
+    data.trend === "up"
+      ? `<span class="text-green-600 font-semibold">📈 Rising</span>`
+      : `<span class="text-red-600 font-semibold">📉 Falling</span>`;
+}
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "year": "2024-25",
+  "source": "Government of India (CACP)",
+  "note": "Prices are indicative. Verify with official MSP notifications before production use.",
+  "msp": [
+    { "crop": "Paddy (Common)", "season": "Kharif", "price": 2300 },
+    { "crop": "Paddy (Grade A)", "season": "Kharif", "price": 2320 },
+
+    { "crop": "Jowar (Hybrid)", "season": "Kharif", "price": 3180 },
+    { "crop": "Jowar (Maldandi)", "season": "Kharif", "price": 3225 },
+    { "crop": "Bajra", "season": "Kharif", "price": 2500 },
+    { "crop": "Maize", "season": "Kharif", "price": 2225 },
+    { "crop": "Ragi", "season": "Kharif", "price": 4290 },
+
+    { "crop": "Arhar (Tur)", "season": "Kharif", "price": 7000 },
+    { "crop": "Moong", "season": "Kharif", "price": 8550 },
+    { "crop": "Urad", "season": "Kharif", "price": 6950 },
+
+    { "crop": "Groundnut", "season": "Kharif", "price": 6370 },
+    { "crop": "Soybean (Yellow)", "season": "Kharif", "price": 4600 },
+    { "crop": "Sunflower Seed", "season": "Kharif", "price": 6760 },
+    { "crop": "Sesamum", "season": "Kharif", "price": 8635 },
+    { "crop": "Nigerseed", "season": "Kharif", "price": 7730 },
+    { "crop": "Cotton (Medium Staple)", "season": "Kharif", "price": 7020 },
+    { "crop": "Cotton (Long Staple)", "season": "Kharif", "price": 7320 },
+
+    { "crop": "Wheat", "season": "Rabi", "price": 2275 },
+    { "crop": "Barley", "season": "Rabi", "price": 1850 },
+    { "crop": "Gram (Chana)", "season": "Rabi", "price": 5440 },
+    { "crop": "Masur (Lentil)", "season": "Rabi", "price": 6425 },
+    { "crop": "Rapeseed & Mustard", "season": "Rabi", "price": 5650 },
+    { "crop": "Safflower", "season": "Rabi", "price": 5215 }
+  ]
+}

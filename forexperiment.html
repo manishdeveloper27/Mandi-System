@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farmer Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <section class="my-20 flex justify-center">
+    <div class="bg-white shadow-xl rounded-xl px-10 py-8 w-[420px] text-center">
+
+      <div class="text-5xl mb-4">👨‍🌾</div>
+
+      <h2 class="text-3xl font-bold mb-2">Farmer Login / Registration</h2>
+      <p class="text-sm text-gray-600 mb-6">
+        Choose verification method (Demo + Real)
+      </p>
+
+      <!-- METHOD SELECT -->
+      <div class="flex gap-4 mb-6">
+        <button onclick="showPhoneOTP()"
+          class="flex-1 bg-emerald-600 text-white py-2 rounded">
+          Phone OTP (Demo)
+        </button>
+
+        <button onclick="showEmailOTP()"
+          class="flex-1 bg-blue-600 text-white py-2 rounded">
+          Email OTP
+        </button>
+      </div>
+
+      <!-- PHONE OTP -->
+      <div id="phoneSection" class="hidden">
+        <input id="mobile" maxlength="10" placeholder="Enter mobile number"
+          class="w-full px-4 py-2 border rounded mb-3" />
+
+        <button onclick="sendPhoneOTP()"
+          class="w-full bg-emerald-600 text-white py-2 rounded mb-3">
+          Get OTP
+        </button>
+
+        <input id="phoneOtp" placeholder="Enter OTP"
+          class="w-full px-4 py-2 border rounded mb-3" />
+
+        <button onclick="verifyPhoneOTP()"
+          class="w-full bg-green-600 text-white py-2 rounded">
+          Verify OTP
+        </button>
+      </div>
+
+      <!-- EMAIL OTP -->
+      <div id="emailSection" class="hidden">
+        <input id="email" placeholder="Enter email"
+          class="w-full px-4 py-2 border rounded mb-3" />
+
+        <button onclick="sendEmailOTP()"
+          class="w-full bg-blue-600 text-white py-2 rounded mb-3">
+          Send Email OTP
+        </button>
+
+        <input id="emailOtp" placeholder="Enter OTP"
+          class="w-full px-4 py-2 border rounded mb-3" />
+
+        <button onclick="verifyEmailOTP()"
+          class="w-full bg-indigo-600 text-white py-2 rounded">
+          Verify OTP
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+<script>
+/* ------------------ COMMON ------------------ */
+function showPhoneOTP() {
+  phoneSection.classList.remove("hidden");
+  emailSection.classList.add("hidden");
+}
+
+function showEmailOTP() {
+  emailSection.classList.remove("hidden");
+  phoneSection.classList.add("hidden");
+}
+
+/* ------------------ JSON PHONE OTP ------------------ */
+let otpData = {};
+let currentPhone = "";
+
+fetch("otp-data.json")
+  .then(res => res.json())
+  .then(data => otpData = data);
+
+function sendPhoneOTP() {
+  const m = mobile.value;
+  if (m.length !== 10) return alert("Invalid number");
+
+  currentPhone = "+91" + m;
+
+  if (!otpData[currentPhone]) {
+    return alert("Number not found (demo)");
+  }
+
+  alert("OTP (Demo): " + otpData[currentPhone].otp);
+}
+
+function verifyPhoneOTP() {
+  if (phoneOtp.value === otpData[currentPhone].otp) {
+    redirectUser(otpData[currentPhone].registered);
+  } else {
+    alert("Invalid OTP");
+  }
+}
+
+/* ------------------ EMAIL OTP ------------------ */
+emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // ← replace
+
+let emailOTP = "";
+
+function sendEmailOTP() {
+  const email = document.getElementById("email").value;
+  emailOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+    to_email: email,
+    otp: emailOTP
+  }).then(() => {
+    alert("OTP sent to email");
+  });
+}
+
+function verifyEmailOTP() {
+  if (emailOtp.value === emailOTP) {
+    redirectUser(false); // treat as new user
+  } else {
+    alert("Invalid OTP");
+  }
+}
+
+/* ------------------ REDIRECT ------------------ */
+function redirectUser(isRegistered) {
+  if (isRegistered) {
+    window.location.href = "farmer-dashboard.html";
+  } else {
+    window.location.href = "farmer-register.html";
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+

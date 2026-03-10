@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bulk Market Data</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- navbar section -->
+    <div class="bg-gray-100">
+    <header class="bg-sky-500 text-white border-b border-white/30 px-20 relative z-50">
+  
+      <!-- GRID NAVBAR -->
+      <div class="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-center">
+  
+        <!-- COLUMN 1: LOGO (spans both rows) -->
+        <div class="row-span-2 flex items-center px-10">
+          <img src="image/project logo.png" alt="MandiSystem Logo" class="h-20 w-auto scale-150 origin-left" />
+        </div>
+  
+        <!-- COLUMN 2 ROW 1: TITLE + LANGUAGE -->
+        <div class="flex items-center justify-between py-2 border-b border-white/40">
+          <div class="leading-tight">
+            <h1 class="text-4xl font-bold">MandiSystem</h1>
+            <p class="text-xs opacity-90">Local Mandi Price System</p>
+          </div>
+  
+          <select class="bg-white text-black text-sm px-3 py-1 rounded-md focus:outline-none">
+            <option>English</option>
+            <option>हिंदी</option>
+          </select>
+        </div>
+
+  
+        <!-- COLUMN 2 ROW 2: MENU -->
+        <nav class="flex gap-8 py-2 text-lg font-semibold">
+          <a href="index.html" class="hover:underline">Home</a>
+          <a href="mandiprices.html" class="hover:underline">Mandi Prices</a>
+          <a href="weather.html" class="hover:underline">Weather</a>
+          <a href="krishinews.html" class="hover:underline">Krishi Duniya</a>
+          <a href="videos.html" class="hover:underline">Videos</a>
+          <a href="farmer.html" class="hover:underline">Farmer</a>
+          <a href="wholesaler.html" class="hover:underline">Wholesaler</a>
+          <a href="govtpolicy.html" class="hover:underline">Govt. Policy</a>
+          <a href="krishiwebstory.html" class="hover:underline">Krishi Web Story</a>
+        </nav>
+      </div>
+    </header>
+    </div>
+
+    <!-- main content -->
+    <div class="bg-gray-50">
+        <!-- Header -->
+        <div class="px-20 py-6 bg-white shadow">
+            <h1 class="text-2xl font-bold text-gray-800">
+                Bulk Market Data
+            </h1>
+            <p class="text-sm text-gray-600 mt-1">
+                Access bulk arrivals, volumes, and average prices for planning.
+            </p>
+        </div>
+    
+        <!-- Table -->
+        <div class="px-20 py-8">
+    
+            <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="bg-green-600 text-white">
+                        <tr>
+                            <th class="px-4 py-3">State</th>
+                            <th class="px-4 py-3">District</th>
+                            <th class="px-4 py-3">Crop</th>
+                            <th class="px-4 py-3">Arrivals (MT)</th>
+                            <th class="px-4 py-3">Avg Price (₹/Quintal)</th>
+                            <th class="px-4 py-3">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bulkTableBody" class="divide-y">
+                        <!-- DATA COMES FROM JSON -->
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- Back -->
+            <div class="mt-6">
+                <a href="index.html" class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                    ← Back to Dashboard
+                </a>
+            </div>
+    
+        </div>
+    </div>
+
+    <!-- footer section -->
+    <footer class="bg-gray-100 mt-5 border-t">
+  
+    <div class="px-20 py-12">
+  
+      <!-- TOP FOOTER GRID -->
+      <div class="grid grid-cols-4 gap-10">
+  
+        <!-- COLUMN 1: ABOUT -->
+        <div>
+          <!-- LOGO (you add image) -->
+          <div class="mb-4">
+            <!-- <img src="logo.png" class="h-8" /> -->
+            <h3 class="text-xl font-bold text-emerald-600">MandiSystem</h3>
+            <p class="text-xs text-gray-500">A division of Emperor pvt ltd</p>
+          </div>
+  
+          <p class="text-sm text-gray-700 leading-relaxed mb-6">
+            MandiSystem is a data led Agritech platform owned by Emperor pvt ltd.
+            Stay updated on the latest advancements in technology and innovation
+            shaping the farming and cultivation sector. Learn how modern
+            agriculture is transforming the industry. MandiSystem helps farmers,
+            Wholesaler, and Retailers to stay interconnected for better business
+            outcomes.
+          </p>
+  
+          <button class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-semibold">
+            Get MandiSystem App
+          </button>
+        </div>
+  
+        <!-- COLUMN 2: QUICK LINKS -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Quick Links</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <ul class="space-y-3 text-sm text-gray-700">
+            <li>Mandi Prices</li>
+            <li>Weather</li>
+            <li>Krishi Duniya</li>
+            <li>Videos</li>
+            <li>Farmer</li>
+            <li>Wholesaler</li>
+          </ul>
+        </div>
+  
+        <!-- COLUMN 3: USEFUL LINKS -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Useful Links</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <ul class="space-y-3 text-sm text-gray-700">
+            <li>About Us</li>
+            <li>Privacy Policy</li>
+            <li>Terms & Conditions</li>
+            <li>Contact Us</li>
+            <li>Blog</li>
+            <li>Sitemap</li>
+          </ul>
+        </div>
+  
+        <!-- COLUMN 4: GET IN TOUCH -->
+        <div>
+          <h4 class="text-lg font-semibold mb-3">Get In Touch</h4>
+          <div class="w-12 h-0.5 bg-emerald-500 mb-4"></div>
+  
+          <p class="text-sm text-gray-700 mb-2">
+            <strong>Address:</strong> E-1/124, Emperor - 462016
+          </p>
+          <p class="text-sm text-gray-700 mb-2">
+            <strong>Phone:</strong> +91-98938160
+          </p>
+          <p class="text-sm text-gray-700 mb-6">
+            <strong>Email:</strong> ravikumar91622436@gmail.com
+          </p>
+  
+          <!-- SOCIAL ICONS (you add icons/images) -->
+          <div class="flex gap-3">
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+            <div class="w-9 h-9 bg-gray-300 rounded"></div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- BOTTOM COPYRIGHT -->
+      <div class="mt-12 border-t pt-4 text-center text-sm text-gray-600 bg-transparent">
+        Copyright © MandiSystem. All Rights Reserved
+      </div>
+    </div>
+  
+    <!-- GRASS IMAGE AREA (you add image) -->
+    <div class="h-20">
+      <img src="image/footer.png" class="w-full h-full object-cover" />
+    </div>
+    </footer>
+
+    <script>
+        fetch("bulk-data.json")
+            .then(res => res.json())
+            .then(data => {
+                const tableBody = document.getElementById("bulkTableBody");
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+            <td class="px-4 py-3">${item.state}</td>
+            <td class="px-4 py-3">${item.district}</td>
+            <td class="px-4 py-3">${item.crop}</td>
+            <td class="px-4 py-3">${item.arrivals}</td>
+            <td class="px-4 py-3">₹${item.price}</td>
+            <td class="px-4 py-3">${item.date}</td>
+          `;
+
+                    tableBody.appendChild(row);
+                });
+            });
+
+    </script>
+
+</body>
+</html>
+

@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MandiSystem</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Bidding System – MandiSystem</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .pulse-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+    .timer-bar-fill { transition: width 1s linear, background-color 0.5s; }
+    .bid-log-scroll { max-height: 130px; overflow-y: auto; }
+    .bid-log-scroll::-webkit-scrollbar { width: 4px; }
+    .bid-log-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+    .bid-log-scroll::-webkit-scrollbar-thumb { background: #a7f3d0; border-radius: 4px; }
+    @media (max-width: 400px) { .mode-label { display: none; } }
+  </style>
 </head>
+<body class="bg-gray-100">
 
-<body">
-    <!-- navbar section -->
+  <!-- NAVBAR — exact match to index.html -->
   <div class="bg-gray-100">
     <header class="bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600
-             text-white border-b border-white/30
-             px-4 md:px-20 relative z-50
-             shadow-md">
-
-      <!-- NAVBAR GRID -->
+                   text-white border-b border-white/30 px-4 md:px-20 relative z-50 shadow-md">
       <div class="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-center">
-  
-        <!-- LOGO -->
         <div class="row-span-2 flex items-center px-2 md:px-10">
-          <img src="image/project logo.png" alt="MandiSystem Logo" class="h-14 md:h-20 w-auto md:scale-150 origin-left" />
+          <img src="image/project logo.png" alt="MandiSystem Logo"
+               class="h-14 md:h-20 w-auto md:scale-150 origin-left"
+               onerror="this.style.display='none'" />
         </div>
-  
-        <!-- TITLE + LANGUAGE + MENU BUTTON -->
         <div class="flex items-center justify-between py-2 border-b border-white/40">
           <div class="leading-tight">
             <h1 class="text-2xl md:text-4xl font-bold">MandiSystem</h1>
             <p class="text-xs opacity-90">Local Mandi Price System</p>
           </div>
-  
           <div class="flex items-center gap-3">
-            <!-- Language -->
             <select class="bg-white text-black text-sm px-3 py-1 rounded-md focus:outline-none hidden sm:block">
-              <option>English</option>
-              <option>हिंदी</option>
+              <option>English</option><option>हिंदी</option>
             </select>
-  
-            <!-- Hamburger -->
-            <button id="menuBtn" class="md:hidden text-3xl focus:outline-none text-white">
-              ☰
-            </button>
-  
+            <button id="menuBtn" class="md:hidden text-3xl focus:outline-none text-white">☰</button>
           </div>
         </div>
-  
-        <!-- DESKTOP MENU -->
-        <nav class="hidden md:flex gap-8 py-2 text-lg font-semibold">
+        <nav class="hidden md:flex gap-6 py-2 text-base font-semibold flex-wrap">
           <a href="index.html" class="hover:underline">Home</a>
           <a href="mandiprices.html" class="hover:underline">Mandi Prices</a>
           <a href="weather.html" class="hover:underline">Weather</a>
@@ -56,244 +50,546 @@
           <a href="farmer.html" class="hover:underline">Farmer</a>
           <a href="wholesaler.html" class="hover:underline">Wholesaler</a>
           <a href="govtpolicy.html" class="hover:underline">Govt. Policy</a>
-          <a href="biddingsystem.html" class="hover:underline">bidding system</a>
+          <a href="biddingsystem.html" class="underline decoration-2 underline-offset-4">bidding system</a>
         </nav>
       </div>
-  
-      <!-- MOBILE MENU -->
-      <nav id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full
-              bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600 text-white px-6 py-4 space-y-1
-               font-semibold text-lg z-50 shadow-lg
-               transition-all duration-300">
-      
-        <a href="index.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Home
-        </a>
-      
-        <a href="mandiprices.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Mandi Prices
-        </a>
-      
-        <a href="weather.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Weather
-        </a>
-      
-        <a href="krishinews.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Krishi Duniya
-        </a>
-      
-        <a href="videos.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Videos
-        </a>
-      
-        <a href="farmer.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Farmer
-        </a>
-      
-        <a href="wholesaler.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Wholesaler
-        </a>
-      
-        <a href="govtpolicy.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Govt. Policy
-        </a>
-      
-        <a href="biddingsystem.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          bidding system
-        </a>
+      <nav id="mobileMenu"
+           class="hidden md:hidden absolute top-full left-0 w-full
+                  bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600
+                  text-white px-6 py-4 space-y-1 font-semibold text-lg z-50 shadow-lg">
+        <a href="index.html"         class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Home</a>
+        <a href="mandiprices.html"   class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Mandi Prices</a>
+        <a href="weather.html"       class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Weather</a>
+        <a href="krishinews.html"    class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Krishi Duniya</a>
+        <a href="videos.html"        class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Videos</a>
+        <a href="farmer.html"        class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Farmer</a>
+        <a href="wholesaler.html"    class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Wholesaler</a>
+        <a href="govtpolicy.html"    class="block px-3 py-2 rounded-lg hover:bg-white/20 hover:pl-6 transition-all duration-300">Govt. Policy</a>
+        <a href="biddingsystem.html" class="block px-3 py-2 rounded-lg bg-white/20 pl-6">bidding system</a>
       </nav>
     </header>
   </div>
 
-    <!-- main code -->
-    <section class="bg-gray-100 py-16 px-4">
-    
-        <div class="max-w-4xl mx-auto text-center">
-    
-            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
-    
-                <h1 class="text-2xl md:text-3xl font-bold text-green-700 mb-6">
-                    Mandi Bidding System
-                </h1>
-    
-                <p class="mb-8 text-gray-600 text-lg">
-                    What do you want to do?
-                </p>
-    
-                <div class="flex flex-col sm:flex-row justify-center gap-6">
-    
-                    <a href="sell-grain.html" class="bg-green-600 text-white px-8 py-3 rounded-xl
-                      hover:bg-green-700 transition font-semibold shadow">
-                        Sell Grain
-                    </a>
-    
-                    <a href="auction-list.html" class="bg-blue-600 text-white px-8 py-3 rounded-xl
-                      hover:bg-blue-700 transition font-semibold shadow">
-                        Buy Grain
-                    </a>
-    
-                </div>
-    
-            </div>
-    
+  <!-- PAGE HERO — matches site's banner pill style -->
+  <div class="mx-4 md:mx-20 my-8">
+    <div class="bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600
+                rounded-2xl px-4 md:px-8 py-5 text-white shadow-md">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">🔨 Live Bidding System</h2>
+          <p class="text-sm opacity-90 mt-1">Farmers list produce · Traders bid at best price · Real-time auctions</p>
         </div>
-    
-    </section>
-
-    <!-- footer -->
-  <footer class="bg-gradient-to-b from-gray-50 to-gray-100 mt-5">
-
-  <div class="max-w-7xl mx-auto px-6 md:px-20 py-10">
-
-    <!-- TOP: BRAND CARD -->
-    <div class="bg-white rounded-2xl shadow-sm p-8 mb-14
-                grid grid-cols-1 lg:grid-cols-2 gap-10">
-
-      <!-- BRAND INFO -->
-      <div>
-        <h2 class="text-3xl font-bold text-emerald-600 mb-2">
-          <a href="index.html">MandiSystem</a>
-        </h2>
-        <p class="text-sm text-gray-500 mb-4">
-          A division of Emperor Pvt Ltd
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-6 max-w-xl">
-          A data-led Agritech platform empowering farmers, wholesalers
-          and retailers with real-time insights, market intelligence,
-          and smarter agricultural decisions.
-        </p>
-
-        <a href="app.html"
-           class="inline-flex items-center gap-2
-                  bg-emerald-600 hover:bg-emerald-700
-                  text-white px-6 py-3 rounded-xl
-                  font-semibold transition shadow">
-          Get MandiSystem App →
-        </a>
+        <div class="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 w-fit">
+          <span class="w-2.5 h-2.5 rounded-full bg-green-300 pulse-dot inline-block"></span>
+          <span class="text-sm font-semibold" id="live-count-badge">3 auctions live</span>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <!-- CONTACT STRIP -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+  <!-- MAIN -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">📍 Address</p>
-          <p class="text-gray-600">E-1/124, Emperor – 462016</p>
-        </div>
+    <!-- Mode Toggle -->
+    <div class="flex rounded-2xl overflow-hidden border border-gray-200 shadow-sm mb-6 bg-white">
+      <button id="btn-trader" onclick="switchMode('trader')"
+              class="flex-1 flex items-center justify-center gap-2 py-3 text-sm sm:text-base font-semibold
+                     bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600 text-white transition-all">
+        🏪 <span class="mode-label">Trader / Wholesaler</span>
+      </button>
+      <button id="btn-farmer" onclick="switchMode('farmer')"
+              class="flex-1 flex items-center justify-center gap-2 py-3 text-sm sm:text-base font-semibold
+                     text-gray-600 hover:bg-emerald-50 transition-all">
+        👨‍🌾 <span class="mode-label">Farmer — List Produce</span>
+      </button>
+    </div>
 
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">📞 Phone</p>
-          <a href="tel:+9198938160" class="text-emerald-600 hover:underline">
-            +91-98938160
-          </a>
-        </div>
+    <!-- TRADER VIEW -->
+    <div id="view-trader">
+      <div class="flex flex-wrap gap-2 mb-5">
+        <button onclick="filterAuctions('all',this)"
+                class="chip-btn px-4 py-1.5 rounded-full text-sm font-semibold border
+                       bg-emerald-600 text-white border-emerald-600">All</button>
+        <button onclick="filterAuctions('live',this)"
+                class="chip-btn px-4 py-1.5 rounded-full text-sm font-semibold border
+                       bg-white text-gray-600 border-gray-300 hover:border-emerald-500 hover:text-emerald-600">
+          🟢 Live (timer)</button>
+        <button onclick="filterAuctions('open',this)"
+                class="chip-btn px-4 py-1.5 rounded-full text-sm font-semibold border
+                       bg-white text-gray-600 border-gray-300 hover:border-sky-500 hover:text-sky-600">
+          🔵 Open bidding</button>
+        <button onclick="filterAuctions('ending',this)"
+                class="chip-btn px-4 py-1.5 rounded-full text-sm font-semibold border
+                       bg-white text-gray-600 border-gray-300 hover:border-yellow-500 hover:text-yellow-600">
+          ⏰ Ending soon</button>
+      </div>
+      <div id="auction-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+    </div>
 
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">✉️ Email</p>
-          <a href="mailto:ravikumar91622436@gmail.com"
-             class="text-emerald-600 hover:underline">
-            ravikumar91622436@gmail.com
-          </a>
-        </div>
+    <!-- FARMER VIEW -->
+    <div id="view-farmer" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-2">🌐 Follow Us</p>
-          <div class="flex gap-3">
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
+        <!-- Form -->
+        <div class="bg-white rounded-2xl shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-5">🌾 List Your Produce for Auction</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Crop Name *</label>
+              <input id="f-crop" type="text" placeholder="e.g. Wheat, Tomato, Onion"
+                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                            focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Quantity (kg) *</label>
+                <input id="f-qty" type="number" min="1" placeholder="500"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                              focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Base Price (₹/qtl) *</label>
+                <input id="f-base" type="number" min="1" placeholder="2000"
+                       class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                              focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Mandi / Location *</label>
+              <input id="f-mandi" type="text" placeholder="e.g. Fathua Mandi, Bihar"
+                     class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                            focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Auction Type</label>
+              <div class="flex gap-6">
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="atype" value="timer" id="r-timer" checked class="accent-emerald-600 w-4 h-4" />
+                  ⏱ Timer-based
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="atype" value="open" id="r-open" class="accent-emerald-600 w-4 h-4" />
+                  🔓 Open (no timer)
+                </label>
+              </div>
+            </div>
+            <div id="timer-opts">
+              <label class="block text-sm font-semibold text-gray-700 mb-1">Auction Duration</label>
+              <select id="f-dur"
+                      class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm
+                             focus:outline-none focus:border-emerald-500">
+                <option value="600">10 minutes</option>
+                <option value="1200">20 minutes</option>
+                <option value="1800">30 minutes</option>
+                <option value="3600">1 hour</option>
+              </select>
+            </div>
+            <button onclick="listProduct()"
+                    class="w-full bg-gradient-to-r from-emerald-600 to-green-500
+                           hover:from-emerald-700 hover:to-green-600
+                           text-white font-bold py-3 rounded-xl transition shadow-md text-sm sm:text-base">
+              🔨 Start Auction
+            </button>
           </div>
         </div>
 
+        <!-- My Listings -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-800">My Active Listings</h3>
+            <span id="listing-count" class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">0</span>
+          </div>
+          <div id="farmer-listings"></div>
+        </div>
+
       </div>
     </div>
-
-    <!-- LINK SECTIONS -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Quick Links</h4>
-        <ul class="space-y-3">
-          <li><a href="mandiprices.html" class="hover:text-emerald-600">Mandi Prices</a></li>
-          <li><a href="weather.html" class="hover:text-emerald-600">Weather</a></li>
-          <li><a href="krishinews.html" class="hover:text-emerald-600">Krishi Duniya</a></li>
-          <li><a href="videos.html" class="hover:text-emerald-600">Videos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">For Users</h4>
-        <ul class="space-y-3">
-          <li><a href="farmer.html" class="hover:text-emerald-600">Farmers</a></li>
-          <li><a href="wholesaler.html" class="hover:text-emerald-600">Wholesalers</a></li>
-          <li><a href="retailer.html" class="hover:text-emerald-600">Retailers</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Company</h4>
-        <ul class="space-y-3">
-          <li><a href="about.html" class="hover:text-emerald-600">About Us</a></li>
-          <li><a href="blog.html" class="hover:text-emerald-600">Blog</a></li>
-          <li><a href="contact.html" class="hover:text-emerald-600">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Legal</h4>
-        <ul class="space-y-3">
-          <li><a href="privacy.html" class="hover:text-emerald-600">Privacy Policy</a></li>
-          <li><a href="terms.html" class="hover:text-emerald-600">Terms & Conditions</a></li>
-          <li><a href="sitemap.html" class="hover:text-emerald-600">Sitemap</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <!-- COPYRIGHT -->
-    <div class="mt-14 pt-6 border-t text-center text-sm text-gray-500">
-      © 2026 <a href="index.html" class="hover:text-emerald-600">MandiSystem</a>. All rights reserved.
-    </div>
-
   </div>
 
-  <!-- FOOTER IMAGE -->
-  <div class="h-24">
-    <img src="image/footer.png" class="w-full h-full object-cover" alt="">
-  </div>
-
+  <!-- FOOTER — exact match to index.html -->
+  <footer class="bg-gradient-to-b from-gray-50 to-gray-100 mt-5">
+    <div class="max-w-7xl mx-auto px-6 md:px-20 py-10">
+      <div class="bg-white rounded-2xl shadow-sm p-8 mb-14 grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-3xl font-bold text-emerald-600 mb-2"><a href="index.html">MandiSystem</a></h2>
+          <p class="text-sm text-gray-500 mb-4">A division of Emperor Pvt Ltd</p>
+          <p class="text-gray-700 leading-relaxed mb-6 max-w-xl">
+            A data-led Agritech platform empowering farmers, wholesalers and retailers with real-time insights,
+            market intelligence, and smarter agricultural decisions.
+          </p>
+          <a href="app.html"
+             class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700
+                    text-white px-6 py-3 rounded-xl font-semibold transition shadow">
+            Get MandiSystem App →
+          </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="font-semibold text-gray-800 mb-1">📍 Address</p>
+            <p class="text-gray-600">Nalanda College of Engineering, Chandi</p>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="font-semibold text-gray-800 mb-1">📞 Phone</p>
+            <a href="tel:+919341161097" class="text-emerald-600 hover:underline">+91-9341161097</a>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="font-semibold text-gray-800 mb-1">✉️ Email</p>
+            <a href="mailto:manishvishwanath27@gmail.com" class="text-emerald-600 hover:underline break-all">manishvishwanath27@gmail.com</a>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-4">
+            <p class="font-semibold text-gray-800 mb-2">🌐 Follow Us</p>
+            <div class="flex gap-3">
+              <a href="https://www.instagram.com/manish_vishwanath27/" target="_blank" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
+              <a href="https://www.facebook.com/ab.manish.73/"         target="_blank" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
+              <a href="https://www.linkedin.com/in/manish-kumar360"    target="_blank" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 text-sm text-gray-600">
+        <div>
+          <h4 class="font-semibold mb-4 text-gray-800">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="mandiprices.html" class="hover:text-emerald-600">Mandi Prices</a></li>
+            <li><a href="weather.html"     class="hover:text-emerald-600">Weather</a></li>
+            <li><a href="krishinews.html"  class="hover:text-emerald-600">Krishi Duniya</a></li>
+            <li><a href="videos.html"      class="hover:text-emerald-600">Videos</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-gray-800">For Users</h4>
+          <ul class="space-y-3">
+            <li><a href="farmer.html"     class="hover:text-emerald-600">Farmers</a></li>
+            <li><a href="wholesaler.html" class="hover:text-emerald-600">Wholesalers</a></li>
+            <li><a href="retailer.html"   class="hover:text-emerald-600">Retailers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-gray-800">Company</h4>
+          <ul class="space-y-3">
+            <li><a href="about.html"   class="hover:text-emerald-600">About Us</a></li>
+            <li><a href="blog.html"    class="hover:text-emerald-600">Blog</a></li>
+            <li><a href="contact.html" class="hover:text-emerald-600">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-gray-800">Legal</h4>
+          <ul class="space-y-3">
+            <li><a href="privacy.html"  class="hover:text-emerald-600">Privacy Policy</a></li>
+            <li><a href="terms.html"    class="hover:text-emerald-600">Terms &amp; Conditions</a></li>
+            <li><a href="sitemap.html"  class="hover:text-emerald-600">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t text-center text-sm text-gray-500">
+        © 2026 <a href="index.html" class="hover:text-emerald-600">MandiSystem</a>. All rights reserved.
+      </div>
+    </div>
+    <div class="h-24">
+      <img src="image/footer.png" class="w-full h-full object-cover" alt="" />
+    </div>
   </footer>
 
-  <!-- for responsive navbar -->
-   <script>
-  const menuBtn = document.getElementById("menuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
+  <!-- TOAST -->
+  <div id="toast"
+       class="fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl text-white text-sm font-semibold
+              shadow-lg opacity-0 pointer-events-none transition-all duration-300 max-w-xs">
+  </div>
 
-  menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-    menuBtn.textContent =
-      menuBtn.textContent.trim() === "☰" ? "✕" : "☰";
-  });
+  <script>
+    let mode='trader', filter='all', myListings=[];
+
+    const auctions=[
+      {id:1,crop:'Wheat', qty:2000,mandi:'Azadpur Mandi, Delhi', base:2100,current:2380,
+       bids:[{who:'Trader Ramesh',amt:2380,ago:'2m ago'},{who:'Trader Suresh',amt:2250,ago:'5m ago'},{who:'Trader Anil',amt:2100,ago:'8m ago'}],
+       type:'live',timeLeft:420,maxTime:600,farmer:'Mohan Singh'},
+      {id:2,crop:'Onion', qty:1500,mandi:'Lasalgaon Mandi, MH',  base:1000,current:1340,
+       bids:[{who:'Wholesaler Priya',amt:1340,ago:'1m ago'},{who:'Trader Ravi',amt:1200,ago:'4m ago'}],
+       type:'live',timeLeft:85,maxTime:600,farmer:'Sunita Devi'},
+      {id:3,crop:'Tomato',qty:800, mandi:'Kolar Mandi, KA',      base:800, current:950,
+       bids:[{who:'Trader Gopal',amt:950,ago:'just now'}],
+       type:'open',timeLeft:null,maxTime:null,farmer:'Kiran Patel'},
+      {id:4,crop:'Chili', qty:500, mandi:'Fathua Mandi, Bihar',  base:9000,current:10200,
+       bids:[{who:'Wholesaler Deepak',amt:10200,ago:'30s ago'},{who:'Trader Asha',amt:9800,ago:'3m ago'}],
+       type:'live',timeLeft:1200,maxTime:1800,farmer:'Ram Prasad'},
+    ];
+
+    function fmtTime(s){const m=Math.floor(s/60),sec=s%60;return m+'m '+String(sec).padStart(2,'0')+'s';}
+    function fmtAmt(n){return '₹'+Number(n).toLocaleString('en-IN');}
+
+    function badgeHtml(a){
+      if(a.type==='ended_accepted') return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-600">✅ Sold</span>`;
+      if(a.type==='open')           return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-sky-100 text-sky-700">🔓 Open bidding</span>`;
+      if(!a.timeLeft||a.timeLeft===0) return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-600">Ended</span>`;
+      if(a.timeLeft<120) return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-700 animate-pulse">🔥 Ending!</span>`;
+      if(a.timeLeft<300) return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">⏰ Ending soon</span>`;
+      return `<span class="text-xs font-bold px-3 py-1 rounded-full bg-green-100 text-green-700">🟢 Live</span>`;
+    }
+    function timerBg(a){
+      if(a.timeLeft<120) return 'bg-red-500';
+      if(a.timeLeft<300) return 'bg-yellow-400';
+      return 'bg-emerald-500';
+    }
+    function borderCls(a){
+      if(a.type==='open') return 'border-l-4 border-sky-400';
+      if(!a.timeLeft||a.timeLeft===0||a.type==='ended_accepted') return 'border-l-4 border-gray-300';
+      if(a.timeLeft<120) return 'border-l-4 border-red-500';
+      if(a.timeLeft<300) return 'border-l-4 border-yellow-400';
+      return 'border-l-4 border-emerald-500';
+    }
+
+    function renderAuctions(){
+      const list=document.getElementById('auction-list');
+      const all=[...auctions,...myListings];
+      let f;
+      if(filter==='all')    f=all;
+      else if(filter==='live')   f=all.filter(a=>a.type==='live'&&a.timeLeft>=120);
+      else if(filter==='open')   f=all.filter(a=>a.type==='open');
+      else if(filter==='ending') f=all.filter(a=>a.type==='live'&&a.timeLeft>0&&a.timeLeft<300);
+      else f=all;
+
+      if(!f.length){
+        list.innerHTML=`<div class="col-span-2 bg-white rounded-2xl shadow-md p-12 text-center text-gray-400"><div class="text-5xl mb-3">📭</div><p class="font-semibold text-lg">No auctions found.</p></div>`;
+        return;
+      }
+      list.innerHTML=f.map(a=>{
+        const ended=(a.type==='live'&&a.timeLeft===0)||a.type==='ended_accepted';
+        const pct=a.type==='live'&&a.maxTime?Math.round((a.timeLeft/a.maxTime)*100):100;
+        const winner=a.bids.length?a.bids[0]:null;
+        return `
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 ${borderCls(a)}" id="card-${a.id}">
+          <div class="flex items-start justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-xl font-bold text-gray-800">🌾 ${a.crop}</h3>
+              <p class="text-sm text-gray-500 mt-0.5">📍 ${a.mandi} &nbsp;·&nbsp; ⚖️ ${a.qty} kg &nbsp;·&nbsp; 👤 ${a.farmer}</p>
+            </div>
+            ${badgeHtml(a)}
+          </div>
+          <div class="grid grid-cols-3 gap-3 mb-4">
+            <div class="bg-gray-50 rounded-xl p-3">
+              <p class="text-xs text-gray-500 mb-1">Base price</p>
+              <p class="text-lg font-bold text-gray-700">${fmtAmt(a.base)}<span class="text-xs font-normal text-gray-400">/qtl</span></p>
+            </div>
+            <div class="bg-emerald-50 rounded-xl p-3">
+              <p class="text-xs text-gray-500 mb-1">Highest bid</p>
+              <p class="text-lg font-bold text-emerald-600" id="hb-${a.id}">${fmtAmt(a.current)}<span class="text-xs font-normal text-gray-400">/qtl</span></p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3">
+              <p class="text-xs text-gray-500 mb-1">${a.type==='live'?'Time left':'Status'}</p>
+              <p class="text-lg font-bold ${a.timeLeft&&a.timeLeft<120?'text-red-600':a.timeLeft&&a.timeLeft<300?'text-yellow-600':'text-gray-700'}" id="tl-${a.id}">
+                ${a.type==='live'?(a.timeLeft>0?fmtTime(a.timeLeft):'Ended'):'Open'}
+              </p>
+            </div>
+          </div>
+          ${a.type==='live'?`
+          <div class="mb-4">
+            <div class="flex justify-between text-xs text-gray-400 mb-1">
+              <span>Auction progress</span><span id="tl2-${a.id}">${fmtTime(a.timeLeft)}</span>
+            </div>
+            <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+              <div id="tf-${a.id}" class="h-2 rounded-full timer-bar-fill ${timerBg(a)}" style="width:${pct}%"></div>
+            </div>
+          </div>`:''}
+          <div class="border border-gray-100 rounded-xl overflow-hidden mb-4">
+            <div class="flex justify-between items-center px-4 py-2 bg-gray-50 border-b border-gray-100">
+              <span class="text-xs font-semibold text-gray-500">Bid history (${a.bids.length})</span>
+              <span class="text-xs text-gray-400">Latest first</span>
+            </div>
+            <div class="bid-log-scroll" id="bl-${a.id}">
+              ${a.bids.length?a.bids.map((b,i)=>`
+                <div class="flex items-center justify-between px-4 py-2 border-b border-gray-50 last:border-0 text-sm">
+                  <span class="font-medium text-gray-800">${i===0?'🏆 ':''}${b.who}</span>
+                  <span class="font-bold text-emerald-600">${fmtAmt(b.amt)}/qtl</span>
+                  <span class="text-xs text-gray-400">${b.ago}</span>
+                </div>`).join('')
+              :`<div class="text-center py-4 text-sm text-gray-400">No bids yet — be the first!</div>`}
+            </div>
+          </div>
+          ${ended&&winner?`
+          <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-xl p-3 flex items-center gap-3 mb-3">
+            <span class="text-2xl">🏆</span>
+            <div>
+              <p class="text-sm font-bold text-emerald-800">Auction ended — ${winner.who} won</p>
+              <p class="text-xs text-emerald-700">Winning bid: ${fmtAmt(winner.amt)}/qtl</p>
+            </div>
+          </div>`:''}
+          ${!ended?`
+          <div class="flex gap-2">
+            <input id="bi-${a.id}" type="number" placeholder="Your bid ≥ ${fmtAmt(a.current+50)}/qtl"
+                   class="flex-1 min-w-0 border border-gray-300 rounded-xl px-3 py-2 text-sm
+                          focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+            <button onclick="placeBid(${a.id})"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold
+                           px-4 py-2 rounded-xl transition whitespace-nowrap shadow-sm">
+              🔨 Bid
+            </button>
+          </div>`:''}
+        </div>`;
+      }).join('');
+
+      const liveN=[...auctions,...myListings].filter(a=>a.type==='live'&&a.timeLeft>0).length;
+      document.getElementById('live-count-badge').textContent=liveN+' auction'+(liveN!==1?'s':'')+' live';
+    }
+
+    function placeBid(id){
+      const inp=document.getElementById('bi-'+id);
+      const val=parseInt(inp.value);
+      const a=[...auctions,...myListings].find(x=>x.id===id);
+      if(!a)return;
+      if(!val||val<=a.current){
+        inp.classList.add('border-red-400','ring-1','ring-red-300');
+        inp.value=''; inp.placeholder='Must be higher!';
+        setTimeout(()=>{inp.classList.remove('border-red-400','ring-1','ring-red-300');inp.placeholder=`Your bid ≥ ${fmtAmt(a.current+50)}/qtl`;},2000);
+        showToast('Bid must exceed current highest bid ⚠️','error');
+        return;
+      }
+      a.current=val;
+      a.bids.unshift({who:'You',amt:val,ago:'just now'});
+      inp.value='';
+      renderAuctions();
+      showToast(`Bid of ${fmtAmt(val)}/qtl placed! 🎉`,'success');
+    }
+
+    function filterAuctions(f,el){
+      filter=f;
+      document.querySelectorAll('.chip-btn').forEach(c=>{
+        c.classList.remove('bg-emerald-600','text-white','border-emerald-600');
+        c.classList.add('bg-white','text-gray-600','border-gray-300');
+      });
+      el.classList.add('bg-emerald-600','text-white','border-emerald-600');
+      el.classList.remove('bg-white','text-gray-600','border-gray-300');
+      renderAuctions();
+    }
+
+    function switchMode(m){
+      mode=m;
+      document.getElementById('view-trader').classList.toggle('hidden',m!=='trader');
+      document.getElementById('view-farmer').classList.toggle('hidden',m!=='farmer');
+      const tBtn=document.getElementById('btn-trader');
+      const fBtn=document.getElementById('btn-farmer');
+      const ON='bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600 text-white';
+      const OFF='text-gray-600 hover:bg-emerald-50';
+      if(m==='trader'){
+        tBtn.className=tBtn.className.replace(OFF,'').trim()+' '+ON;
+        fBtn.className=fBtn.className.replace(ON,'').trim()+' '+OFF;
+      } else {
+        fBtn.className=fBtn.className.replace(OFF,'').trim()+' '+ON;
+        tBtn.className=tBtn.className.replace(ON,'').trim()+' '+OFF;
+        renderFarmerListings();
+      }
+    }
+
+    function listProduct(){
+      const crop=document.getElementById('f-crop').value.trim();
+      const qty=parseInt(document.getElementById('f-qty').value);
+      const base=parseInt(document.getElementById('f-base').value);
+      const mandi=document.getElementById('f-mandi').value.trim();
+      const type=document.querySelector('input[name="atype"]:checked').value;
+      const dur=parseInt(document.getElementById('f-dur').value);
+      if(!crop||!qty||!base||!mandi){showToast('Please fill all required fields ⚠️','error');return;}
+      myListings.unshift({id:Date.now(),crop,qty,mandi,base,current:base,bids:[],type,
+        timeLeft:type==='timer'?dur:null,maxTime:type==='timer'?dur:null,farmer:'You (farmer)'});
+      ['f-crop','f-qty','f-base','f-mandi'].forEach(id=>document.getElementById(id).value='');
+      renderFarmerListings();
+      showToast(`"${crop}" auction started! 🎉`,'success');
+    }
+
+    function acceptBid(id){
+      const a=myListings.find(x=>x.id===id);
+      if(!a||!a.bids.length)return;
+      a.type='ended_accepted';
+      renderFarmerListings();
+      showToast(`Deal confirmed with ${a.bids[0].who} at ${fmtAmt(a.bids[0].amt)}/qtl 🤝`,'success');
+    }
+
+    function renderFarmerListings(){
+      const el=document.getElementById('farmer-listings');
+      document.getElementById('listing-count').textContent=myListings.length;
+      if(!myListings.length){
+        el.innerHTML=`<div class="bg-white rounded-2xl shadow-md p-10 text-center text-gray-400"><div class="text-5xl mb-3">🌱</div><p class="font-semibold">No listings yet. Add your first crop!</p></div>`;
+        return;
+      }
+      el.innerHTML=myListings.map(a=>`
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 ${borderCls(a)} mb-4">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <p class="font-bold text-gray-800 text-lg">🌾 ${a.crop}</p>
+              <p class="text-sm text-gray-500">${a.qty} kg · ${a.mandi}</p>
+            </div>
+            ${badgeHtml(a)}
+          </div>
+          <div class="grid grid-cols-3 gap-2 mb-3">
+            <div class="bg-gray-50 rounded-xl p-2 text-center">
+              <p class="text-xs text-gray-400">Base</p>
+              <p class="font-bold text-gray-700 text-sm">${fmtAmt(a.base)}</p>
+            </div>
+            <div class="bg-emerald-50 rounded-xl p-2 text-center">
+              <p class="text-xs text-gray-400">Top bid</p>
+              <p class="font-bold text-emerald-600 text-sm">${a.bids.length?fmtAmt(a.bids[0].amt):'—'}</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-2 text-center">
+              <p class="text-xs text-gray-400">Bids</p>
+              <p class="font-bold text-gray-700 text-sm">${a.bids.length}</p>
+            </div>
+          </div>
+          ${a.bids.length&&a.type!=='ended_accepted'?`
+            <button onclick="acceptBid(${a.id})"
+                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold py-2.5 rounded-xl transition">
+              🤝 Accept ${fmtAmt(a.bids[0].amt)}/qtl from ${a.bids[0].who}
+            </button>`:''}
+          ${a.type==='ended_accepted'?`
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-xl p-3 text-sm font-semibold text-emerald-800">
+              ✅ Sold to ${a.bids[0].who} at ${fmtAmt(a.bids[0].amt)}/qtl
+            </div>`:''}
+        </div>`).join('');
+    }
+
+    // Live countdown
+    setInterval(()=>{
+      let any=false;
+      [...auctions,...myListings].forEach(a=>{if(a.type==='live'&&a.timeLeft>0){a.timeLeft--;any=true;}});
+      if(!any)return;
+      [...auctions,...myListings].forEach(a=>{
+        const tlEl=document.getElementById('tl-'+a.id);
+        const tl2El=document.getElementById('tl2-'+a.id);
+        const tfEl=document.getElementById('tf-'+a.id);
+        if(!tlEl||a.type!=='live')return;
+        const txt=a.timeLeft>0?fmtTime(a.timeLeft):'Ended';
+        tlEl.textContent=txt;
+        if(tl2El)tl2El.textContent=txt;
+        if(tfEl){
+          tfEl.style.width=Math.round((a.timeLeft/a.maxTime)*100)+'%';
+          tfEl.className='h-2 rounded-full timer-bar-fill '+timerBg(a);
+        }
+        if(a.timeLeft===0)setTimeout(renderAuctions,100);
+      });
+    },1000);
+
+    // Auction type toggle
+    document.querySelectorAll('input[name="atype"]').forEach(r=>{
+      r.addEventListener('change',()=>{
+        document.getElementById('timer-opts').style.display=document.getElementById('r-timer').checked?'block':'none';
+      });
+    });
+
+    // Hamburger
+    document.getElementById('menuBtn').addEventListener('click',()=>{
+      const m=document.getElementById('mobileMenu');
+      m.classList.toggle('hidden');
+      document.getElementById('menuBtn').textContent=m.classList.contains('hidden')?'☰':'✕';
+    });
+
+    // Toast
+    function showToast(msg,type='success'){
+      const t=document.getElementById('toast');
+      t.textContent=msg;
+      t.className=`fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl text-white text-sm font-semibold shadow-lg max-w-xs transition-all duration-300 ${type==='success'?'bg-emerald-600':'bg-red-500'}`;
+      t.style.opacity='1';t.style.transform='translateY(0)';
+      setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(1rem)';},3000);
+    }
+
+    renderAuctions();
+    renderFarmerListings();
   </script>
-
 </body>
-
 </html>

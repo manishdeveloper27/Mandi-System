@@ -3,442 +3,738 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Farmer Login</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <title>Buyer Login – MandiSystem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:       #2e7d32;
+      --green-light: #4caf50;
+      --green-dark:  #1b5e20;
+      --green-soft:  #e8f5e9;
+      --amber:       #ff8f00;
+      --blue:        #1565c0;
+      --blue-soft:   #e3f2fd;
+      --blue-light:  #1976d2;
+      --white:       #ffffff;
+      --bg:          #f5f9f5;
+      --text:        #1a2e1a;
+      --muted:       #5a7a5a;
+      --border:      #c8e6c9;
+      --shadow:      0 4px 28px rgba(46,125,50,.13);
+      --radius:      14px;
+    }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Navbar */
+    nav { background: var(--green-dark); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.25); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 38px; border-radius: 8px; }
+    .nav-logo-text { color: var(--white); font-weight: 700; font-size: 1.1rem; line-height: 1.1; }
+    .nav-logo-text span { display: block; font-size: .63rem; font-weight: 400; color: #a5d6a7; letter-spacing: .04em; }
+    .nav-links { display: flex; gap: 5px; list-style: none; }
+    .nav-links a { color: #c8e6c9; text-decoration: none; font-size: .77rem; font-weight: 500; padding: 5px 9px; border-radius: 6px; transition: background .2s; white-space: nowrap; }
+    .nav-links a:hover, .nav-links a.active { background: var(--green-light); color: var(--white); }
+    .nav-ham { display: none; font-size: 1.5rem; color: var(--white); cursor: pointer; background: none; border: none; }
+    .mob-menu { display: none; background: var(--green-dark); }
+    .mob-menu a { display: block; color: #c8e6c9; text-decoration: none; padding: 11px 20px; font-size: .85rem; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .mob-menu a:hover { background: var(--green); color: var(--white); }
+    @media(max-width:900px){ .nav-links{display:none} .nav-ham{display:block} }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, var(--green-dark) 0%, #388e3c 100%); color: var(--white); text-align: center; padding: 44px 20px 38px; position: relative; overflow: hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-icon { font-size: 3rem; display: block; margin-bottom: 10px; }
+    .hero h1 { font-size: 1.85rem; font-weight: 700; margin-bottom: 6px; }
+    .hero p { font-size: .9rem; color: #a5d6a7; max-width: 480px; margin: 0 auto; }
+
+    /* Main */
+    main { flex:1; display:flex; justify-content:center; align-items:flex-start; padding: 36px 16px 60px; }
+
+    /* Card */
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; max-width: 500px; overflow: hidden; border: 1px solid var(--border); animation: up .4s ease both; }
+    @keyframes up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Tab bar */
+    .tab-bar { display: grid; grid-template-columns: 1fr 1fr; background: var(--green-soft); border-bottom: 2px solid var(--border); }
+    .tab-btn { padding: 15px; font-size: .87rem; font-weight: 600; cursor: pointer; border: none; background: transparent; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .2s; }
+    .tab-btn.active { background: var(--white); color: var(--green-dark); border-bottom: 3px solid var(--amber); margin-bottom: -2px; }
+
+    /* Panel */
+    .panel { display: none; padding: 26px 28px 30px; }
+    .panel.active { display: block; }
+
+    /* Buyer type cards */
+    .buyer-type-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+    .buyer-type-card { border: 2px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all .2s; background: var(--bg); }
+    .buyer-type-card:hover { border-color: var(--green-light); }
+    .buyer-type-card.sel-g { border-color: var(--green); background: var(--green-soft); }
+    .buyer-type-card.sel-r { border-color: var(--blue); background: var(--blue-soft); }
+    .bt-icon { font-size: 1.7rem; display: block; margin-bottom: 5px; }
+    .bt-title { font-size: .82rem; font-weight: 700; }
+    .bt-sub { font-size: .68rem; color: var(--muted); margin-top: 2px; }
+
+    /* OTP sub-tabs */
+    .otp-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .otp-tab { flex:1; padding: 9px 0; border: 1.5px solid var(--border); border-radius: 8px; background: var(--green-soft); color: var(--muted); font-size: .8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: all .2s; }
+    .otp-tab.active { background: var(--green-dark); color: var(--white); border-color: var(--green-dark); }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: .79rem; font-weight: 600; color: var(--green-dark); margin-bottom: 5px; }
+    .req { color: var(--amber); }
+    .iw { position: relative; display: flex; align-items: center; }
+    .ii { position: absolute; left: 11px; font-size: .95rem; pointer-events: none; }
+    input[type=text], input[type=tel], input[type=email], input[type=number], select {
+      width: 100%; padding: 11px 12px 11px 36px; border: 1.5px solid var(--border); border-radius: 9px;
+      font-family: inherit; font-size: .86rem; color: var(--text); background: var(--bg); outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, select:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(76,175,80,.14); background: var(--white); }
+    select { cursor: pointer; }
+
+    /* OTP row */
+    .otp-row { display: flex; gap: 9px; align-items: flex-end; margin-bottom: 16px; }
+    .otp-row .form-group { flex:1; margin-bottom:0; }
+    .btn-otp { height: 42px; padding: 0 14px; background: var(--green); color: var(--white); border: none; border-radius: 9px; font-size: .78rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .2s; }
+    .btn-otp:hover { background: var(--green-dark); }
+    .btn-otp:disabled { background: #aaa; cursor: not-allowed; }
+    .countdown { font-size: .75rem; color: var(--muted); text-align: right; margin-top: 3px; }
+    .countdown span { color: var(--amber); font-weight: 600; }
+
+    /* OTP boxes */
+    .otp-boxes { display: flex; gap: 9px; justify-content: center; margin-top: 10px; }
+    .otp-box { width: 46px; height: 50px; text-align: center; font-size: 1.25rem; font-weight: 700; border: 2px solid var(--border); border-radius: 10px; background: var(--bg); outline: none; transition: border-color .2s; padding: 0; }
+    .otp-box:focus { border-color: var(--green-light); background: var(--white); }
+
+    /* Section label */
+    .sec-label { font-size: .71rem; font-weight: 700; letter-spacing: .08em; color: var(--green-dark); text-transform: uppercase; background: var(--green-soft); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; margin: 18px 0 14px; display: inline-block; }
+
+    /* Grid */
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media(max-width:480px){ .g2{ grid-template-columns:1fr; } }
+
+    /* Hint */
+    .hint { font-size: .71rem; color: var(--muted); margin-top: 4px; }
+    .hint.ok { color: var(--green); }
+    .hint.err { color: #c62828; }
+
+    /* Register type picker */
+    .reg-type-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+    .reg-type-card { border: 2px solid var(--border); border-radius: 12px; padding: 18px 12px 14px; cursor: pointer; transition: all .2s; background: var(--bg); text-align: center; position: relative; }
+    .reg-type-card:hover { border-color: var(--green-light); transform: translateY(-1px); }
+    .reg-type-card.sel-gst { border-color: var(--green); background: var(--green-soft); }
+    .reg-type-card.sel-ret { border-color: var(--blue); background: var(--blue-soft); }
+    .rtc-icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .rtc-title { font-size: .85rem; font-weight: 700; }
+    .rtc-sub { font-size: .7rem; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+    .rtc-badge { position: absolute; top: 8px; right: 8px; font-size: .62rem; font-weight: 700; padding: 2px 7px; border-radius: 20px; }
+    .badge-gst { background: var(--green-soft); color: var(--green-dark); border: 1px solid var(--border); }
+    .badge-free { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+
+    /* Notice box */
+    .notice { border-radius: 10px; padding: 12px 14px; font-size: .78rem; line-height: 1.55; margin-bottom: 18px; display: flex; gap: 10px; align-items: flex-start; }
+    .notice.green { background: var(--green-soft); border: 1px solid #a5d6a7; color: var(--green-dark); }
+    .notice.blue  { background: var(--blue-soft);  border: 1px solid #90caf9; color: #0d47a1; }
+    .notice.amber { background: #fff8e1; border: 1px solid #ffe082; color: #5d4037; }
+    .ni { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .notice strong { display: block; margin-bottom: 2px; }
+
+    /* Limit chip */
+    .limit-chip { display: inline-flex; align-items: center; gap: 5px; background: #fff3e0; border: 1px solid #ffcc80; border-radius: 20px; padding: 4px 11px; font-size: .72rem; font-weight: 600; color: #e65100; margin-bottom: 14px; }
+
+    /* Steps */
+    .steps { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 20px; }
+    .step { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; border: 2px solid var(--border); color: var(--muted); background: var(--bg); transition: all .3s; }
+    .step.done  { background: var(--green); border-color: var(--green); color: var(--white); }
+    .step.active{ background: var(--amber); border-color: var(--amber); color: var(--white); }
+    .step-line  { flex:1; max-width:36px; height:2px; background:var(--border); border-radius:2px; transition: background .3s; }
+    .step-line.done { background: var(--green); }
+
+    /* Checkbox */
+    .check-row { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0; }
+    .check-row input[type=checkbox] { width:15px; height:15px; accent-color:var(--green); margin-top:2px; flex-shrink:0; }
+    .check-row label { font-size: .76rem; color: var(--muted); font-weight: 400; margin:0; line-height:1.4; }
+    .check-row label a { color: var(--green); }
+
+    /* Buttons */
+    .btn-primary { width:100%; padding:13px; background:linear-gradient(135deg,var(--green),var(--green-dark)); color:var(--white); border:none; border-radius:10px; font-size:.93rem; font-weight:700; cursor:pointer; transition:opacity .2s,box-shadow .2s; box-shadow:0 4px 14px rgba(46,125,50,.35); margin-top:4px; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .btn-primary:hover { opacity:.91; }
+    .btn-primary.blue-btn { background:linear-gradient(135deg,#1976d2,#0d47a1); box-shadow:0 4px 14px rgba(21,101,192,.35); }
+    .btn-back { height:42px; padding:0 16px; background:var(--green-soft); color:var(--green-dark); border:1.5px solid var(--border); border-radius:9px; font-size:.8rem; font-weight:600; cursor:pointer; flex-shrink:0; }
+    .btn-back:hover { background:var(--border); }
+    .btn-row { display:flex; gap:9px; margin-top:4px; }
+    .btn-row .btn-primary { margin-top:0; }
+
+    /* GST upgrade box */
+    .upgrade-box { margin-top:18px; padding:14px; background:#fff8e1; border:1.5px dashed #ffcc80; border-radius:10px; }
+    .upgrade-box .ub-title { font-size:.78rem; font-weight:700; color:#5d4037; margin-bottom:4px; }
+    .upgrade-box .ub-sub { font-size:.72rem; color:#795548; margin-bottom:10px; }
+
+    /* Switch link */
+    .switch-link { text-align:center; margin-top:18px; font-size:.8rem; color:var(--muted); }
+    .switch-link button { background:none; border:none; color:var(--green); font-weight:700; cursor:pointer; font-family:inherit; font-size:inherit; padding:0; }
+
+    /* Benefits */
+    .benefits { background:var(--green-soft); border-top:1px solid var(--border); padding:12px 28px; display:flex; gap:12px; flex-wrap:wrap; }
+    .benefit-item { display:flex; align-items:center; gap:5px; font-size:.73rem; color:var(--green-dark); font-weight:500; }
+
+    /* Spinner */
+    .spinner { width:17px; height:17px; border:2.5px solid rgba(255,255,255,.35); border-top-color:var(--white); border-radius:50%; animation:spin .7s linear infinite; display:none; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+
+    /* Toast */
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green-dark); color:var(--white); padding:12px 24px; border-radius:40px; font-size:.83rem; font-weight:600; box-shadow:0 6px 24px rgba(0,0,0,.25); z-index:999; transition:transform .4s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; pointer-events:none; }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+    .toast.err { background:#c62828; }
+
+    /* Footer */
+    footer { background:var(--green-dark); color:#c8e6c9; padding:38px 24px 22px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:28px; max-width:1100px; margin:0 auto 24px; }
+    @media(max-width:700px){ .footer-grid{grid-template-columns:1fr 1fr} }
+    @media(max-width:420px){ .footer-grid{grid-template-columns:1fr} }
+    .fb { font-size:.95rem; font-weight:700; color:var(--white); margin-bottom:5px; }
+    .ft { font-size:.73rem; color:#a5d6a7; line-height:1.55; margin-bottom:12px; }
+    .fc { font-size:.75rem; line-height:2; }
+    .fc a { color:#a5d6a7; text-decoration:none; }
+    footer h4 { font-size:.77rem; font-weight:700; color:var(--white); margin-bottom:8px; letter-spacing:.04em; text-transform:uppercase; }
+    footer ul { list-style:none; }
+    footer li { margin-bottom:5px; }
+    footer li a { color:#a5d6a7; text-decoration:none; font-size:.75rem; }
+    footer li a:hover { color:var(--white); }
+    .footer-bottom { text-align:center; font-size:.73rem; color:#66bb6a; border-top:1px solid rgba(255,255,255,.1); padding-top:16px; }
+  </style>
 </head>
-
 <body>
-  <!-- navbar section -->
-  <div class="bg-gray-100">
-    <header class="bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600
-             text-white border-b border-white/30
-             px-4 md:px-20 relative z-50
-             shadow-md">
 
-      <!-- NAVBAR GRID -->
-      <div class="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-center">
-  
-        <!-- LOGO -->
-        <div class="row-span-2 flex items-center px-2 md:px-10">
-          <img src="image/project logo.png" alt="MandiSystem Logo" class="h-14 md:h-20 w-auto md:scale-150 origin-left" />
-        </div>
-  
-        <!-- TITLE + LANGUAGE + MENU BUTTON -->
-        <div class="flex items-center justify-between py-2 border-b border-white/40">
-          <div class="leading-tight">
-            <h1 class="text-2xl md:text-4xl font-bold">MandiSystem</h1>
-            <p class="text-xs opacity-90">Local Mandi Price System</p>
+<!-- Navbar -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="image/project logo.png" alt="Logo" onerror="this.style.display='none'"/>
+    <div class="nav-logo-text">MandiSystem <span>Local Mandi Price System</span></div>
+  </a>
+  <button class="nav-ham" id="ham">☰</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="mandiprices.html">Mandi Prices</a></li>
+    <li><a href="weather.html">Weather</a></li>
+    <li><a href="krishinews.html">Krishi Duniya</a></li>
+    <li><a href="videos.html">Videos</a></li>
+    <li><a href="farmer.html">Farmer</a></li>
+    <li><a href="wholesaler.html" class="active">Wholesaler</a></li>
+    <li><a href="govtpolicy.html">Govt. Policy</a></li>
+    <li><a href="biddingsystem.html">Bidding System</a></li>
+  </ul>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="mandiprices.html">💹 Mandi Prices</a>
+  <a href="weather.html">🌦 Weather</a>
+  <a href="krishinews.html">📰 Krishi Duniya</a>
+  <a href="videos.html">🎥 Videos</a>
+  <a href="farmer.html">👨‍🌾 Farmer</a>
+  <a href="wholesaler.html">🏪 Wholesaler</a>
+  <a href="govtpolicy.html">📋 Govt. Policy</a>
+  <a href="biddingsystem.html">🔨 Bidding System</a>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <span class="hero-icon">🛒</span>
+  <h1>Buyer / Wholesaler Portal</h1>
+  <p>Wholesalers, retailers &amp; local shop owners — buy crops directly from farmers at fair prices.</p>
+</div>
+
+<!-- Main -->
+<main>
+  <div class="card">
+    <div class="tab-bar">
+      <button class="tab-btn active" id="loginTabBtn" onclick="switchTab('login')">🔐 Login</button>
+      <button class="tab-btn" id="regTabBtn" onclick="switchTab('register')">📝 Register</button>
+    </div>
+
+    <!-- ════════════ LOGIN PANEL ════════════ -->
+    <div class="panel active" id="loginPanel">
+      <div style="margin-bottom:18px">
+        <label style="margin-bottom:10px">I am a:</label>
+        <div class="buyer-type-row">
+          <div class="buyer-type-card sel-g" id="ltW" onclick="setLoginType('w')">
+            <span class="bt-icon">🏪</span>
+            <div class="bt-title">Wholesaler / Trader</div>
+            <div class="bt-sub">Login with GST number</div>
           </div>
-  
-          <div class="flex items-center gap-3">
-            <!-- Language -->
-            <select class="bg-white text-black text-sm px-3 py-1 rounded-md focus:outline-none hidden sm:block">
-              <option>English</option>
-              <option>हिंदी</option>
-            </select>
-  
-            <!-- Hamburger -->
-            <button id="menuBtn" class="md:hidden text-3xl focus:outline-none text-white">
-              ☰
-            </button>
-  
-          </div>
-        </div>
-  
-        <!-- DESKTOP MENU -->
-        <nav class="hidden md:flex gap-8 py-2 text-lg font-semibold">
-          <a href="index.html" class="hover:underline">Home</a>
-          <a href="mandiprices.html" class="hover:underline">Mandi Prices</a>
-          <a href="weather.html" class="hover:underline">Weather</a>
-          <a href="krishinews.html" class="hover:underline">Krishi Duniya</a>
-          <a href="videos.html" class="hover:underline">Videos</a>
-          <a href="farmer.html" class="hover:underline">Farmer</a>
-          <a href="wholesaler.html" class="hover:underline">Wholesaler</a>
-          <a href="govtpolicy.html" class="hover:underline">Govt. Policy</a>
-          <a href="biddingsystem.html" class="hover:underline">bidding system</a>
-        </nav>
-      </div>
-  
-      <!-- MOBILE MENU -->
-      <nav id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full
-              bg-gradient-to-r from-stone-700 via-emerald-700 to-green-600 text-white px-6 py-4 space-y-1
-               font-semibold text-lg z-50 shadow-lg
-               transition-all duration-300">
-      
-        <a href="index.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Home
-        </a>
-      
-        <a href="mandiprices.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Mandi Prices
-        </a>
-      
-        <a href="weather.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Weather
-        </a>
-      
-        <a href="krishinews.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Krishi Duniya
-        </a>
-      
-        <a href="videos.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Videos
-        </a>
-      
-        <a href="farmer.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Farmer
-        </a>
-      
-        <a href="wholesaler.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Wholesaler
-        </a>
-      
-        <a href="govtpolicy.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          Govt. Policy
-        </a>
-      
-        <a href="biddingsystem.html" class="block px-3 py-2 rounded-lg
-                  hover:bg-white/20 hover:pl-6
-                  transition-all duration-300">
-          bidding system
-        </a>
-      </nav>
-    </header>
-  </div>
-
-  <!-- WHOLESALER LOGIN SECTION -->
-  <section class="my-20 flex justify-center">
-  <div class="bg-blue-50 border border-emerald-200 rounded-xl shadow-lg px-10 py-8 w-[420px]">
-
-    <div class="text-5xl text-center mb-4">🏪</div>
-
-    <h2 class="text-3xl font-bold text-gray-800 text-center mb-2">
-      Wholesaler Login
-    </h2>
-
-    <p class="text-sm text-gray-600 text-center mb-6">
-      Choose a verification method to continue
-    </p>
-
-    <!-- TABS -->
-    <div class="flex mb-6 border rounded-md overflow-hidden">
-      <button id="mobileTab" onclick="showMobileLogin()"
-        class="w-1/2 py-2 text-sm font-semibold bg-emerald-600 text-white">
-        Mobile OTP
-      </button>
-      <button id="emailTab" onclick="showEmailLogin()"
-        class="w-1/2 py-2 text-sm font-semibold bg-emerald-100 text-emerald-700">
-        Email OTP
-      </button>
-    </div>
-
-    <!-- 📱 MOBILE OTP -->
-    <div id="mobileLogin">
-
-      <input id="mobile" maxlength="10" placeholder="Enter 10-digit Mobile Number"
-        class="w-full px-4 py-3 mb-4 rounded-md border border-gray-300" />
-
-      <button onclick="sendMobileOTP()"
-        class="w-full bg-emerald-600 text-white py-3 rounded-md">
-        Get OTP
-      </button>
-
-      <div id="mobileOtpSection" class="hidden mt-6">
-        <input id="mobileOtp" placeholder="Enter OTP"
-          class="w-full px-4 py-3 mb-4 rounded-md border border-gray-300" />
-
-        <button onclick="verifyMobileOTP()"
-          class="w-full bg-blue-600 text-white py-3 rounded-md">
-          Verify OTP
-        </button>
-      </div>
-    </div>
-
-    <!-- 📧 EMAIL OTP -->
-    <div id="emailLogin" class="hidden">
-
-      <input id="email" type="email" placeholder="Enter Email Address"
-        class="w-full px-4 py-3 mb-4 rounded-md border border-gray-300" />
-
-      <button onclick="sendEmailOTP()"
-        class="w-full bg-emerald-600 text-white py-3 rounded-md">
-        Send Email OTP
-      </button>
-
-      <div id="emailOtpSection" class="hidden mt-6">
-        <input id="emailOtp" placeholder="Enter Email OTP"
-          class="w-full px-4 py-3 mb-4 rounded-md border border-gray-300" />
-
-        <button onclick="verifyEmailOTP()"
-          class="w-full bg-blue-600 text-white py-3 rounded-md">
-          Verify OTP
-        </button>
-      </div>
-    </div>
-
-    <!-- REGISTER -->
-    <div class="mt-6 text-center border-t pt-4">
-      <p class="text-sm text-gray-600">New farmer?</p>
-      <a href="farmer-register.html"
-        class="text-emerald-700 font-semibold hover:underline">
-        Register here
-      </a>
-    </div>
-
-  </div>
-  </section>
-
-   <!-- footer -->
-  <footer class="bg-gradient-to-b from-gray-50 to-gray-100 mt-5">
-
-  <div class="max-w-7xl mx-auto px-6 md:px-20 py-10">
-
-    <!-- TOP: BRAND CARD -->
-    <div class="bg-white rounded-2xl shadow-sm p-8 mb-14
-                grid grid-cols-1 lg:grid-cols-2 gap-10">
-
-      <!-- BRAND INFO -->
-      <div>
-        <h2 class="text-3xl font-bold text-emerald-600 mb-2">
-          <a href="index.html">MandiSystem</a>
-        </h2>
-        <p class="text-sm text-gray-500 mb-4">
-          A division of Emperor Pvt Ltd
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-6 max-w-xl">
-          A data-led Agritech platform empowering farmers, wholesalers
-          and retailers with real-time insights, market intelligence,
-          and smarter agricultural decisions.
-        </p>
-
-        <a href="app.html"
-           class="inline-flex items-center gap-2
-                  bg-emerald-600 hover:bg-emerald-700
-                  text-white px-6 py-3 rounded-xl
-                  font-semibold transition shadow">
-          Get MandiSystem App →
-        </a>
-      </div>
-
-      <!-- CONTACT STRIP -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">📍 Address</p>
-          <p class="text-gray-600">E-1/124, Emperor – 462016</p>
-        </div>
-
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">📞 Phone</p>
-          <a href="tel:+9198938160" class="text-emerald-600 hover:underline">
-            +91-98938160
-          </a>
-        </div>
-
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-1">✉️ Email</p>
-          <a href="mailto:ravikumar91622436@gmail.com"
-             class="text-emerald-600 hover:underline">
-            ravikumar91622436@gmail.com
-          </a>
-        </div>
-
-        <div class="bg-gray-50 rounded-xl p-4">
-          <p class="font-semibold text-gray-800 mb-2">🌐 Follow Us</p>
-          <div class="flex gap-3">
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
-            <a href="#" class="w-9 h-9 bg-gray-200 hover:bg-emerald-600 rounded-lg transition"></a>
+          <div class="buyer-type-card" id="ltR" onclick="setLoginType('r')">
+            <span class="bt-icon">🛍️</span>
+            <div class="bt-title">Retailer / Shop Owner</div>
+            <div class="bt-sub">Login with mobile only</div>
           </div>
         </div>
+      </div>
 
+      <!-- Wholesaler login -->
+      <div id="wLoginBlock">
+        <div class="otp-tabs">
+          <button class="otp-tab active" id="mlTab" onclick="setLoginOtp('m')">📱 Mobile OTP</button>
+          <button class="otp-tab" id="elTab" onclick="setLoginOtp('e')">✉️ Email OTP</button>
+        </div>
+        <div id="mLoginSec">
+          <div class="form-group">
+            <label>GST Number <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🏷️</span><input type="text" id="lGst" placeholder="e.g. 27AAPFU0939F1ZV" maxlength="15" oninput="this.value=this.value.toUpperCase()"/></div>
+          </div>
+          <div class="otp-row">
+            <div class="form-group"><label>Registered Mobile <span class="req">*</span></label>
+              <div class="iw"><span class="ii">📱</span><input type="tel" id="lMob" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+            <button class="btn-otp" id="lmBtn" onclick="fireOtp('lmBtn','lmCd','lmTm','lmBox')">Get OTP</button>
+          </div>
+          <div class="countdown" id="lmCd" style="display:none">Resend in <span id="lmTm">30</span>s</div>
+          <div id="lmBox" style="display:none;margin-bottom:8px"><label>Enter 6-digit OTP</label>
+            <div class="otp-boxes"><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/></div>
+          </div>
+        </div>
+        <div id="eLoginSec" style="display:none">
+          <div class="form-group">
+            <label>GST Number <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🏷️</span><input type="text" id="lGstE" placeholder="e.g. 27AAPFU0939F1ZV" maxlength="15" oninput="this.value=this.value.toUpperCase()"/></div>
+          </div>
+          <div class="otp-row">
+            <div class="form-group"><label>Registered Email <span class="req">*</span></label>
+              <div class="iw"><span class="ii">✉️</span><input type="email" id="lEml" placeholder="business@example.com"/></div>
+            </div>
+            <button class="btn-otp" id="leBtn" onclick="fireOtp('leBtn','leCd','leTm','leBox')">Get OTP</button>
+          </div>
+          <div class="countdown" id="leCd" style="display:none">Resend in <span id="leTm">30</span>s</div>
+          <div id="leBox" style="display:none;margin-bottom:8px"><label>Enter 6-digit OTP</label>
+            <div class="otp-boxes"><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retailer login -->
+      <div id="rLoginBlock" style="display:none">
+        <div class="notice blue">
+          <span class="ni">🛍️</span>
+          <div><strong>Retailer / Local Shop Login</strong>No GST needed — just your registered mobile number.</div>
+        </div>
+        <div class="otp-row">
+          <div class="form-group"><label>Mobile Number <span class="req">*</span></label>
+            <div class="iw"><span class="ii">📱</span><input type="tel" id="lrMob" placeholder="+91 XXXXX XXXXX"/></div>
+          </div>
+          <button class="btn-otp" id="lrBtn" onclick="fireOtp('lrBtn','lrCd','lrTm','lrBox')">Get OTP</button>
+        </div>
+        <div class="countdown" id="lrCd" style="display:none">Resend in <span id="lrTm">30</span>s</div>
+        <div id="lrBox" style="display:none;margin-bottom:8px"><label>Enter 6-digit OTP</label>
+          <div class="otp-boxes"><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/></div>
+        </div>
+        <div class="notice amber" style="margin-top:10px">
+          <span class="ni">⚠️</span>
+          <div><strong>Purchase limit: ₹2 lakh/month</strong>Add your GST number from your profile anytime to upgrade and unlock bulk buying.</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="handleLogin()" style="margin-top:16px">
+        <span class="spinner" id="lSpin"></span><span id="lBtnTxt">🔓 Verify &amp; Login</span>
+      </button>
+      <div class="switch-link">Not registered? <button onclick="switchTab('register')">Create an account →</button></div>
+    </div>
+
+    <!-- ════════════ REGISTER PANEL ════════════ -->
+    <div class="panel" id="registerPanel">
+      <div class="steps">
+        <div class="step active" id="s1">1</div><div class="step-line" id="l1"></div>
+        <div class="step" id="s2">2</div><div class="step-line" id="l2"></div>
+        <div class="step" id="s3">3</div>
+      </div>
+
+      <!-- Step 0: pick buyer type -->
+      <div id="typeStep">
+        <div style="text-align:center;margin-bottom:18px;font-size:.8rem;font-weight:600;color:var(--muted)">What type of buyer are you?</div>
+        <div class="reg-type-row">
+          <div class="reg-type-card" id="rtcG" onclick="pickType('gst')">
+            <span class="rtc-badge badge-gst">GST Required</span>
+            <span class="rtc-icon">🏪</span>
+            <div class="rtc-title">Wholesaler / Trader</div>
+            <div class="rtc-sub">Arhatiya, processor, exporter, bulk buyer</div>
+          </div>
+          <div class="reg-type-card" id="rtcR" onclick="pickType('ret')">
+            <span class="rtc-badge badge-free">No GST Needed</span>
+            <span class="rtc-icon">🛍️</span>
+            <div class="rtc-title">Retailer / Shop Owner</div>
+            <div class="rtc-sub">Kirana, hawker, restaurant, home buyer</div>
+          </div>
+        </div>
+        <div class="notice amber">
+          <span class="ni">💡</span>
+          <div><strong>Not sure which to pick?</strong>If you don't have a GST number, choose Retailer. You can always upgrade later by adding your GST from your profile.</div>
+        </div>
+      </div>
+
+      <!-- WHOLESALER (GST) FLOW -->
+      <div id="gstFlow" style="display:none">
+        <!-- Step 1 -->
+        <div id="gS1">
+          <div class="notice green"><span class="ni">🏪</span>
+            <div><strong>Wholesaler Registration</strong>Register with your GSTIN to unlock bulk buying, bidding, and direct farmer deals.</div>
+          </div>
+          <div class="sec-label">🏢 Business Details</div>
+          <div class="form-group"><label>GST Number <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🏷️</span><input type="text" id="gGst" placeholder="e.g. 27AAPFU0939F1ZV" maxlength="15" oninput="this.value=this.value.toUpperCase();chkGst(this)"/></div>
+            <div class="hint" id="gHint">🔐 Your 15-character GSTIN</div>
+          </div>
+          <div class="form-group"><label>Business / Firm Name <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🏢</span><input type="text" id="gBiz" placeholder="e.g. Ravi Traders Pvt Ltd"/></div>
+          </div>
+          <div class="form-group"><label>Business Type <span class="req">*</span></label>
+            <div class="iw"><span class="ii">📦</span>
+              <select id="gType"><option value="">-- Select type --</option><option>Wholesaler</option><option>Commission Agent (Arhatiya)</option><option>Processor / Miller</option><option>Exporter</option><option>Retailer Chain (GST registered)</option><option>Cold Storage Operator</option><option>Other Bulk Buyer</option></select>
+            </div>
+          </div>
+          <div class="g2">
+            <div class="form-group"><label>State <span class="req">*</span></label>
+              <div class="iw"><span class="ii">🗺️</span><select id="gState"><option value="">Select</option><option>Bihar</option><option>Uttar Pradesh</option><option>Maharashtra</option><option>Punjab</option><option>Haryana</option><option>Madhya Pradesh</option><option>Rajasthan</option><option>Andhra Pradesh</option><option>Karnataka</option><option>Gujarat</option><option>West Bengal</option><option>Odisha</option><option>Other</option></select></div>
+            </div>
+            <div class="form-group"><label>City / District <span class="req">*</span></label>
+              <div class="iw"><span class="ii">🏙️</span><input type="text" id="gCity" placeholder="e.g. Patna"/></div>
+            </div>
+          </div>
+          <div class="form-group"><label>Business Address <span class="req">*</span></label>
+            <div class="iw"><span class="ii">📍</span><input type="text" id="gAddr" placeholder="Shop / office address, Mandi name"/></div>
+          </div>
+          <div class="form-group"><label>Preferred Mandi(s)</label>
+            <div class="iw"><span class="ii">🏬</span><input type="text" id="gMandi" placeholder="e.g. Azadpur, Lasalgaon"/></div>
+          </div>
+          <button class="btn-primary" onclick="gNext(2)">Next: Contact Details →</button>
+        </div>
+        <!-- Step 2 -->
+        <div id="gS2" style="display:none">
+          <div class="sec-label">📞 Contact Details</div>
+          <div class="g2">
+            <div class="form-group"><label>Owner Name <span class="req">*</span></label>
+              <div class="iw"><span class="ii">👤</span><input type="text" id="gName" placeholder="Full name"/></div>
+            </div>
+            <div class="form-group"><label>Mobile <span class="req">*</span></label>
+              <div class="iw"><span class="ii">📱</span><input type="tel" id="gMob" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+          </div>
+          <div class="form-group"><label>Business Email <span class="req">*</span></label>
+            <div class="iw"><span class="ii">✉️</span><input type="email" id="gEmail" placeholder="business@example.com"/></div>
+          </div>
+          <div class="sec-label">🌾 Buying Preferences</div>
+          <div class="form-group"><label>Crops You Buy</label>
+            <div class="iw"><span class="ii">🌽</span><input type="text" id="gCrops" placeholder="e.g. Wheat, Onion, Tomato, Chili"/></div>
+          </div>
+          <div class="g2">
+            <div class="form-group"><label>Avg. Monthly Volume</label>
+              <div class="iw"><span class="ii">⚖️</span><input type="text" id="gVol" placeholder="e.g. 50 tons"/></div>
+            </div>
+            <div class="form-group"><label>Payment Mode</label>
+              <div class="iw"><span class="ii">💳</span>
+                <select id="gPay"><option value="">Select</option><option>Bank Transfer / NEFT</option><option>Cheque</option><option>UPI</option><option>Cash</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row"><button class="btn-back" onclick="gNext(1)">← Back</button><button class="btn-primary" onclick="gNext(3)">Next: Verify OTP →</button></div>
+        </div>
+        <!-- Step 3 -->
+        <div id="gS3" style="display:none">
+          <div class="sec-label">🔐 Mobile Verification</div>
+          <div class="otp-row">
+            <div class="form-group"><label>Mobile Number <span class="req">*</span></label>
+              <div class="iw"><span class="ii">📱</span><input type="tel" id="gVerMob" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+            <button class="btn-otp" id="gOtpBtn" onclick="fireOtp('gOtpBtn','gCd','gTm','gBox')">Send OTP</button>
+          </div>
+          <div class="countdown" id="gCd" style="display:none">Resend in <span id="gTm">30</span>s</div>
+          <div id="gBox" style="display:none;margin-bottom:8px"><label>Enter 6-digit OTP</label>
+            <div class="otp-boxes"><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/></div>
+          </div>
+          <div class="check-row" style="margin-top:14px">
+            <input type="checkbox" id="gTerms"/>
+            <label for="gTerms">I agree to <a href="terms.html">Terms &amp; Conditions</a> and <a href="privacy.html">Privacy Policy</a>. All details are accurate.</label>
+          </div>
+          <div class="btn-row"><button class="btn-back" onclick="gNext(2)">← Back</button>
+            <button class="btn-primary" onclick="doRegister('gst')"><span class="spinner" id="gSpin"></span><span id="gTxt">✅ Complete Registration</span></button>
+          </div>
+          <div class="switch-link">Already registered? <button onclick="switchTab('login')">Login →</button></div>
+        </div>
+      </div>
+
+      <!-- RETAILER (NO GST) FLOW -->
+      <div id="retFlow" style="display:none">
+        <!-- Step 1 -->
+        <div id="rS1">
+          <div class="notice blue"><span class="ni">🛍️</span>
+            <div><strong>Retailer Registration — No GST needed</strong>Register with your Aadhaar &amp; mobile. Quick, free, and easy.</div>
+          </div>
+          <div class="limit-chip">⚠️ Purchase limit: ₹2 lakh/month &nbsp;|&nbsp; Upgradeable by adding GST</div>
+          <div class="sec-label">👤 Personal Details</div>
+          <div class="g2">
+            <div class="form-group"><label>Full Name <span class="req">*</span></label>
+              <div class="iw"><span class="ii">👤</span><input type="text" id="rName" placeholder="Your full name"/></div>
+            </div>
+            <div class="form-group"><label>Mobile Number <span class="req">*</span></label>
+              <div class="iw"><span class="ii">📱</span><input type="tel" id="rMob" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+          </div>
+          <div class="form-group"><label>Aadhaar Number <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🪪</span><input type="text" id="rAadhar" placeholder="XXXX XXXX XXXX" maxlength="14" oninput="fmtAadhar(this)"/></div>
+            <div class="hint">🔒 Used only for identity verification — last 8 digits will be masked.</div>
+          </div>
+          <div class="form-group"><label>Email (Optional)</label>
+            <div class="iw"><span class="ii">✉️</span><input type="email" id="rEmail" placeholder="your@email.com"/></div>
+          </div>
+          <div class="sec-label">🛒 Shop Details</div>
+          <div class="form-group"><label>Shop / Business Name</label>
+            <div class="iw"><span class="ii">🏬</span><input type="text" id="rShop" placeholder="e.g. Ram Kirana Store (optional)"/></div>
+          </div>
+          <div class="form-group"><label>Shop Type <span class="req">*</span></label>
+            <div class="iw"><span class="ii">🏪</span>
+              <select id="rType"><option value="">-- Select --</option><option>Kirana / General Store</option><option>Vegetable / Fruit Vendor</option><option>Hotel / Restaurant / Dhaba</option><option>Caterer</option><option>Sweet Shop / Bakery</option><option>Small Reseller / Hawker</option><option>Home Buyer (personal use)</option><option>Other</option></select>
+            </div>
+          </div>
+          <div class="g2">
+            <div class="form-group"><label>State <span class="req">*</span></label>
+              <div class="iw"><span class="ii">🗺️</span><select id="rState"><option value="">Select</option><option>Bihar</option><option>Uttar Pradesh</option><option>Maharashtra</option><option>Punjab</option><option>Haryana</option><option>Madhya Pradesh</option><option>Rajasthan</option><option>Andhra Pradesh</option><option>Karnataka</option><option>Gujarat</option><option>West Bengal</option><option>Odisha</option><option>Other</option></select></div>
+            </div>
+            <div class="form-group"><label>City / Village <span class="req">*</span></label>
+              <div class="iw"><span class="ii">🏙️</span><input type="text" id="rCity" placeholder="e.g. Patna / Chandi"/></div>
+            </div>
+          </div>
+          <div class="form-group"><label>Full Address <span class="req">*</span></label>
+            <div class="iw"><span class="ii">📍</span><input type="text" id="rAddr" placeholder="Street, area, landmark"/></div>
+          </div>
+          <div class="sec-label">🌾 What Do You Buy?</div>
+          <div class="form-group"><label>Crops / Produce Needed</label>
+            <div class="iw"><span class="ii">🥬</span><input type="text" id="rCrops" placeholder="e.g. Vegetables, Onion, Potato, Wheat"/></div>
+          </div>
+          <div class="g2">
+            <div class="form-group"><label>Buying Frequency</label>
+              <div class="iw"><span class="ii">📅</span><select id="rFreq"><option value="">Select</option><option>Daily</option><option>Weekly</option><option>Fortnightly</option><option>Monthly</option></select></div>
+            </div>
+            <div class="form-group"><label>Approx. Order Value</label>
+              <div class="iw"><span class="ii">💰</span><select id="rOrderVal"><option value="">Select</option><option>Below ₹5,000</option><option>₹5,000 – ₹25,000</option><option>₹25,000 – ₹1 lakh</option><option>₹1 lakh – ₹2 lakh</option></select></div>
+            </div>
+          </div>
+          <button class="btn-primary blue-btn" onclick="rNext(2)">Next: Verify Mobile →</button>
+        </div>
+        <!-- Step 2 -->
+        <div id="rS2" style="display:none">
+          <div class="sec-label">📱 Mobile Verification</div>
+          <div class="notice blue"><span class="ni">📱</span>
+            <div><strong>Verify your mobile number</strong>An OTP will be sent to the mobile number you provided.</div>
+          </div>
+          <div class="otp-row">
+            <div class="form-group"><label>Mobile Number <span class="req">*</span></label>
+              <div class="iw"><span class="ii">📱</span><input type="tel" id="rVerMob" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+            <button class="btn-otp" id="rOtpBtn" onclick="fireOtp('rOtpBtn','rCd','rTm','rBox')">Send OTP</button>
+          </div>
+          <div class="countdown" id="rCd" style="display:none">Resend in <span id="rTm">30</span>s</div>
+          <div id="rBox" style="display:none;margin-bottom:8px"><label>Enter 6-digit OTP</label>
+            <div class="otp-boxes"><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/><input class="otp-box" maxlength="1"/></div>
+          </div>
+          <!-- Optional GST upgrade -->
+          <div class="upgrade-box">
+            <div class="ub-title">🚀 Have a GST number? Add it (optional)</div>
+            <div class="ub-sub">Adding GST removes the ₹2 lakh purchase limit and unlocks bidding &amp; bulk orders.</div>
+            <div class="iw"><span class="ii">🏷️</span><input type="text" id="rOptGst" placeholder="Enter GST number (optional)" maxlength="15" oninput="this.value=this.value.toUpperCase()"/></div>
+          </div>
+          <div class="check-row" style="margin-top:14px">
+            <input type="checkbox" id="rTerms"/>
+            <label for="rTerms">I agree to <a href="terms.html">Terms &amp; Conditions</a> and <a href="privacy.html">Privacy Policy</a>. My Aadhaar details are correct.</label>
+          </div>
+          <div class="btn-row"><button class="btn-back" onclick="rNext(1)">← Back</button>
+            <button class="btn-primary blue-btn" onclick="doRegister('ret')"><span class="spinner" id="rSpin"></span><span id="rTxt">✅ Complete Registration</span></button>
+          </div>
+          <div class="switch-link">Already registered? <button onclick="switchTab('login')">Login →</button></div>
+        </div>
+      </div>
+
+      <!-- Back to type picker -->
+      <div id="backToType" style="display:none;margin-top:14px;text-align:center">
+        <button onclick="resetType()" style="background:none;border:none;color:var(--muted);font-size:.77rem;cursor:pointer;font-family:inherit">← Choose different buyer type</button>
       </div>
     </div>
 
-    <!-- LINK SECTIONS -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Quick Links</h4>
-        <ul class="space-y-3">
-          <li><a href="mandiprices.html" class="hover:text-emerald-600">Mandi Prices</a></li>
-          <li><a href="weather.html" class="hover:text-emerald-600">Weather</a></li>
-          <li><a href="krishinews.html" class="hover:text-emerald-600">Krishi Duniya</a></li>
-          <li><a href="videos.html" class="hover:text-emerald-600">Videos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">For Users</h4>
-        <ul class="space-y-3">
-          <li><a href="farmer.html" class="hover:text-emerald-600">Farmers</a></li>
-          <li><a href="wholesaler.html" class="hover:text-emerald-600">Wholesalers</a></li>
-          <li><a href="retailer.html" class="hover:text-emerald-600">Retailers</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Company</h4>
-        <ul class="space-y-3">
-          <li><a href="about.html" class="hover:text-emerald-600">About Us</a></li>
-          <li><a href="blog.html" class="hover:text-emerald-600">Blog</a></li>
-          <li><a href="contact.html" class="hover:text-emerald-600">Contact</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-semibold mb-4 text-gray-800">Legal</h4>
-        <ul class="space-y-3">
-          <li><a href="privacy.html" class="hover:text-emerald-600">Privacy Policy</a></li>
-          <li><a href="terms.html" class="hover:text-emerald-600">Terms & Conditions</a></li>
-          <li><a href="sitemap.html" class="hover:text-emerald-600">Sitemap</a></li>
-        </ul>
-      </div>
-
+    <!-- Benefits -->
+    <div class="benefits">
+      <div class="benefit-item"><span>✅</span> All Buyer Types Welcome</div>
+      <div class="benefit-item"><span>🌾</span> Direct from Farmers</div>
+      <div class="benefit-item"><span>📊</span> Real-time Prices</div>
+      <div class="benefit-item"><span>🔒</span> Secure &amp; Verified</div>
     </div>
-
-    <!-- COPYRIGHT -->
-    <div class="mt-14 pt-6 border-t text-center text-sm text-gray-500">
-      © 2026 <a href="index.html" class="hover:text-emerald-600">MandiSystem</a>. All rights reserved.
-    </div>
-
   </div>
+</main>
 
-  <!-- FOOTER IMAGE -->
-  <div class="h-24">
-    <img src="image/footer.png" class="w-full h-full object-cover" alt="">
+<div class="toast" id="toast"></div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="fb">MandiSystem</div>
+      <div class="ft">A data-led Agritech platform empowering farmers, wholesalers and retailers with real-time insights.</div>
+      <div class="fc">📍 Nalanda College of Engineering, Chandi<br/>📞 <a href="tel:+919341161097">+91-9341161097</a><br/>✉️ <a href="mailto:manishvishwanath27@gmail.com">manishvishwanath27@gmail.com</a></div>
+    </div>
+    <div><h4>Quick Links</h4><ul><li><a href="mandiprices.html">Mandi Prices</a></li><li><a href="weather.html">Weather</a></li><li><a href="krishinews.html">Krishi Duniya</a></li><li><a href="videos.html">Videos</a></li></ul></div>
+    <div><h4>For Users</h4><ul><li><a href="farmer.html">Farmers</a></li><li><a href="wholesaler.html">Wholesalers</a></li><li><a href="retailer.html">Retailers</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
   </div>
+  <div class="footer-bottom">© 2026 MandiSystem · A division of Emperor Pvt Ltd. All rights reserved.</div>
+</footer>
 
-  </footer>
+<script>
+/* Hamburger */
+document.getElementById('ham').onclick = () => {
+  const m = document.getElementById('mobMenu');
+  m.style.display = m.style.display === 'block' ? 'none' : 'block';
+};
 
-  <!-- ================= JAVASCRIPT ================= --> 
-  <script>
-    /* ---------- TAB SWITCH ---------- */
-    function showMobileLogin() {
-        mobileLogin.classList.remove("hidden");
-        emailLogin.classList.add("hidden");
-        mobileTab.classList.add("bg-emerald-600", "text-white");
-        emailTab.classList.remove("bg-emerald-600", "text-white");
-    }
-
-    function showEmailLogin() {
-        emailLogin.classList.remove("hidden");
-        mobileLogin.classList.add("hidden");
-        emailTab.classList.add("bg-emerald-600", "text-white");
-        mobileTab.classList.remove("bg-emerald-600", "text-white");
-    }
-
-    /* ---------- MOBILE OTP ---------- */
-    let otpData = {};
-    let currentMobile = "";
-
-    fetch("otp-data.json")
-        .then(res => res.json())
-        .then(data => otpData = data);
-
-    function sendMobileOTP() {
-        const m = mobile.value;
-        if (m.length !== 10) return alert("Invalid number");
-
-        currentMobile = "+91" + m;
-        if (!otpData[currentMobile]) return alert("Number not found (demo)");
-
-        mobileOtpSection.classList.remove("hidden");
-        alert("OTP (Demo): " + otpData[currentMobile].otp);
-    }
-
-    function verifyMobileOTP() {
-        if (mobileOtp.value === otpData[currentMobile].otp) {
-            if (otpData[currentMobile].registered) {
-                location.href = "farmer-dashboard.html";
-            } else {
-                location.href = "farmer-register.html";
-            }
-        } else {
-            alert("Invalid OTP");
-        }
-    }
-
-    /* ---------- EMAIL OTP ---------- */
-    emailjs.init("OZyRRjgPyEtVrsYlD");
-
-    let generatedEmailOTP = "";
-    let emailData = {};
-
-    // 🔹 LOAD EMAIL DATA
-    fetch("email-data.json")
-        .then(res => res.json())
-        .then(data => emailData = data)
-        .catch(err => console.error("Email data load error", err));
-
-    function sendEmailOTP() {
-        const userEmail = email.value;
-        if (!userEmail) return alert("Enter email");
-
-        generatedEmailOTP = Math.floor(100000 + Math.random() * 900000).toString();
-
-        emailjs.send(
-            "service_mszrx5m",
-            "template_1e7lx87",
-            {
-                to_email: userEmail,
-                otp: generatedEmailOTP
-            }
-        ).then(() => {
-            alert("OTP sent to email 📧");
-            emailOtpSection.classList.remove("hidden");
-        }).catch(err => {
-            alert("Failed to send email");
-            console.error(err);
-        });
-    }
-
-    function verifyEmailOTP() {
-        const userEmail = email.value;
-
-        if (emailOtp.value !== generatedEmailOTP) {
-            alert("Invalid Email OTP");
-            return;
-        }
-
-        // 🔹 REDIRECT LOGIC
-        if (emailData[userEmail] && emailData[userEmail].registered) {
-            location.href = "farmer-dashboard.html";
-        } else {
-            location.href = "farmer-register.html";
-        }
-    }
-  </script>
-  <!-- for responsive navbar -->
-   <script>
-  const menuBtn = document.getElementById("menuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-
-  menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-    menuBtn.textContent =
-      menuBtn.textContent.trim() === "☰" ? "✕" : "☰";
+/* Tab switch */
+function switchTab(t) {
+  ['login','register'].forEach(x => {
+    document.getElementById(x+'Panel').classList.toggle('active', x===t);
+    document.getElementById(x==='login'?'loginTabBtn':'regTabBtn').classList.toggle('active', x===t);
   });
-  </script>
+}
 
+/* Login: buyer type */
+function setLoginType(t) {
+  const isW = t==='w';
+  document.getElementById('ltW').className = 'buyer-type-card' + (isW?' sel-g':'');
+  document.getElementById('ltR').className  = 'buyer-type-card' + (!isW?' sel-r':'');
+  document.getElementById('wLoginBlock').style.display = isW?'block':'none';
+  document.getElementById('rLoginBlock').style.display  = isW?'none':'block';
+}
+
+/* Login: OTP method */
+function setLoginOtp(m) {
+  const isM = m==='m';
+  document.getElementById('mlTab').classList.toggle('active', isM);
+  document.getElementById('elTab').classList.toggle('active', !isM);
+  document.getElementById('mLoginSec').style.display = isM?'block':'none';
+  document.getElementById('eLoginSec').style.display = isM?'none':'block';
+}
+
+/* Register: pick type */
+function pickType(t) {
+  document.getElementById('typeStep').style.display = 'none';
+  document.getElementById('backToType').style.display = 'block';
+  const isG = t==='gst';
+  document.getElementById('rtcG').className = 'reg-type-card' + (isG?' sel-gst':'');
+  document.getElementById('rtcR').className = 'reg-type-card' + (!isG?' sel-ret':'');
+  document.getElementById('gstFlow').style.display = isG?'block':'none';
+  document.getElementById('retFlow').style.display = isG?'none':'block';
+  markSteps(1, isG?3:2);
+}
+function resetType() {
+  document.getElementById('typeStep').style.display = 'block';
+  document.getElementById('backToType').style.display = 'none';
+  document.getElementById('gstFlow').style.display = 'none';
+  document.getElementById('retFlow').style.display = 'none';
+  resetSteps();
+}
+
+/* Steps for GST (3 steps) */
+let gCur=1;
+function gNext(n) {
+  if (n>gCur) {
+    if (gCur===1 && (!v('gGst')||!v('gBiz')||!v('gType')||!v('gState')||!v('gCity')||!v('gAddr'))) { toast('⚠️ Please fill all required fields',1); return; }
+    if (gCur===2 && (!v('gName')||!v('gMob')||!v('gEmail'))) { toast('⚠️ Fill all contact details',1); return; }
+    if (gCur===2) document.getElementById('gVerMob').value = v('gMob');
+  }
+  document.getElementById('gS'+gCur).style.display='none';
+  gCur=n;
+  document.getElementById('gS'+n).style.display='block';
+  markSteps(n,3);
+}
+
+/* Steps for Retailer (2 steps) */
+let rCur=1;
+function rNext(n) {
+  if (n>rCur) {
+    if (rCur===1 && (!v('rName')||!v('rMob')||!v('rAadhar')||!v('rType')||!v('rState')||!v('rCity')||!v('rAddr'))) { toast('⚠️ Please fill all required fields',1); return; }
+    if (rCur===1) document.getElementById('rVerMob').value = v('rMob');
+  }
+  document.getElementById('rS'+rCur).style.display='none';
+  rCur=n;
+  document.getElementById('rS'+n).style.display='block';
+  markSteps(n,2);
+}
+
+/* Steps UI */
+function markSteps(cur, total) {
+  for (let i=1;i<=3;i++) {
+    const s=document.getElementById('s'+i);
+    s.className='step'; s.style.opacity=i>total?'.25':'1';
+    if (i<cur) s.classList.add('done');
+    if (i===cur) s.classList.add('active');
+  }
+  for (let i=1;i<=2;i++) {
+    const l=document.getElementById('l'+i);
+    l.className='step-line'; l.style.opacity=i>=total?'.25':'1';
+    if (i<cur) l.classList.add('done');
+  }
+}
+function resetSteps() {
+  for (let i=1;i<=3;i++) { const s=document.getElementById('s'+i); s.className='step'; s.style.opacity='1'; }
+  document.getElementById('s1').classList.add('active');
+  for (let i=1;i<=2;i++) { const l=document.getElementById('l'+i); l.className='step-line'; l.style.opacity='1'; }
+}
+
+/* GST validation */
+const GST_RX=/^\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z][A-Z\d]$/;
+function chkGst(el) {
+  const h=document.getElementById('gHint');
+  if (!el.value) { h.textContent='🔐 Your 15-character GSTIN'; h.className='hint'; return; }
+  if (GST_RX.test(el.value)) { h.textContent='✅ Valid GST format'; h.className='hint ok'; }
+  else { h.textContent='❌ Invalid format (e.g. 27AAPFU0939F1ZV)'; h.className='hint err'; }
+}
+
+/* Aadhaar format */
+function fmtAadhar(el) {
+  let d=el.value.replace(/\D/g,'').slice(0,12);
+  el.value=d.replace(/(\d{4})(?=\d)/g,'$1 ').trim();
+}
+
+/* OTP fire */
+const tms={};
+function fireOtp(btnId,cdId,tmId,boxId) {
+  const btn=document.getElementById(btnId), cd=document.getElementById(cdId), bx=document.getElementById(boxId);
+  bx.style.display='block'; cd.style.display='block'; btn.disabled=true;
+  toast('✅ OTP sent successfully!');
+  let t=30; clearInterval(tms[btnId]);
+  tms[btnId]=setInterval(()=>{ document.getElementById(tmId).textContent=--t; if(t<=0){clearInterval(tms[btnId]);cd.style.display='none';btn.disabled=false;} },1000);
+}
+
+/* OTP box navigation */
+document.addEventListener('input',e=>{ if(!e.target.classList.contains('otp-box'))return; e.target.value=e.target.value.replace(/\D/g,'').slice(-1); if(e.target.value){const n=e.target.nextElementSibling; if(n&&n.classList.contains('otp-box'))n.focus();} });
+document.addEventListener('keydown',e=>{ if(e.target.classList.contains('otp-box')&&e.key==='Backspace'&&!e.target.value){const p=e.target.previousElementSibling; if(p&&p.classList.contains('otp-box'))p.focus();} });
+
+/* Login */
+function handleLogin() {
+  const sp=document.getElementById('lSpin'),tx=document.getElementById('lBtnTxt');
+  sp.style.display='inline-block'; tx.textContent='Verifying…';
+  setTimeout(()=>{ sp.style.display='none'; tx.textContent='🔓 Verify & Login'; toast('✅ Login successful! Redirecting…'); },1800);
+}
+
+/* Register */
+function doRegister(type) {
+  const isG=type==='gst';
+  const tc=isG?'gTerms':'rTerms', spId=isG?'gSpin':'rSpin', txId=isG?'gTxt':'rTxt';
+  if (!document.getElementById(tc).checked) { toast('⚠️ Please accept Terms & Conditions',1); return; }
+  const sp=document.getElementById(spId), tx=document.getElementById(txId);
+  sp.style.display='inline-block'; tx.textContent='Registering…';
+  setTimeout(()=>{ sp.style.display='none'; tx.textContent='✅ Complete Registration'; toast('🎉 Registered! Welcome to MandiSystem!'); setTimeout(()=>switchTab('login'),2000); },2000);
+}
+
+/* Helpers */
+function v(id){ return document.getElementById(id).value.trim(); }
+function toast(msg,err=0){
+  const t=document.getElementById('toast'); t.textContent=msg;
+  t.className='toast'+(err?' err':''); t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+</script>
 </body>
 </html>

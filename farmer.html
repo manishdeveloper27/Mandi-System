@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farmer Login – MandiSystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-50:  #EAF3DE;
+    --green-100: #C0DD97;
+    --green-200: #97C459;
+    --green-400: #639922;
+    --green-600: #3B6D11;
+    --green-800: #27500A;
+    --green-900: #173404;
+    --amber-50:  #FAEEDA;
+    --amber-200: #EF9F27;
+    --amber-400: #BA7517;
+    --amber-800: #633806;
+    --bg: #f5f0e8;
+    --card-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5a5a5a;
+    --text-muted: #8a8a8a;
+    --border: #d8d0c0;
+    --input-bg: #fafaf7;
+    --error: #c0392b;
+    --success: #27500A;
+  }
+
+  body {
+    font-family: 'Hind', sans-serif;
+    background-color: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* — decorative background pattern — */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(99,153,34,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(186,117,23,0.07) 0%, transparent 40%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23639922' fill-opacity='0.04'%3E%3Cpath d='M30 0 C20 10 10 20 0 30 C10 40 20 50 30 60 C40 50 50 40 60 30 C50 20 40 10 30 0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* — top nav strip — */
+  .topbar {
+    position: relative;
+    z-index: 10;
+    background: var(--green-800);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .topbar-logo .logo-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--green-400);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .topbar-logo span {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .topbar-logo small {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.65rem;
+    color: var(--green-100);
+    display: block;
+    line-height: 1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .topbar-nav a {
+    color: var(--green-100);
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-left: 1.5rem;
+    transition: color 0.2s;
+  }
+  .topbar-nav a:hover { color: #fff; }
+
+  /* — main layout — */
+  .main-wrapper {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* — left illustration panel — */
+  .panel-left {
+    background: linear-gradient(160deg, var(--green-800) 0%, var(--green-600) 60%, var(--green-400) 100%);
+    padding: 3rem 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel-left::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .panel-left::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .panel-heading {
+    position: relative;
+    z-index: 2;
+  }
+  .panel-heading .welcome-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--green-50);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .panel-heading h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .panel-heading h1 span {
+    color: var(--amber-200);
+  }
+  .panel-heading p {
+    color: var(--green-50);
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 340px;
+  }
+
+  .features-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--green-50);
+    font-size: 0.92rem;
+    margin-bottom: 0.9rem;
+    opacity: 0.9;
+  }
+  .features-list li .feat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    flex: 1;
+  }
+  .stat-box .stat-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-box .stat-label {
+    font-size: 0.72rem;
+    color: var(--green-100);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  /* — right form panel — */
+  .panel-right {
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 3.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* — tab switcher — */
+  .tab-switcher {
+    display: flex;
+    background: #f2ede2;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 2rem;
+    gap: 4px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .tab-btn.active {
+    background: var(--green-800);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(39,80,10,0.25);
+  }
+
+  /* — form title — */
+  .form-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--green-900);
+    margin-bottom: 0.3rem;
+  }
+  .form-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+  }
+  .form-subtitle a {
+    color: var(--green-600);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* — form fields — */
+  .field-group {
+    margin-bottom: 1rem;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .field-row .field-group { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: 0.2px;
+  }
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap .icon {
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  .input-wrap input,
+  .input-wrap select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px 0 38px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--input-bg);
+    font-family: 'Hind', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .input-wrap input:focus,
+  .input-wrap select:focus {
+    border-color: var(--green-400);
+    box-shadow: 0 0 0 3px rgba(99,153,34,0.12);
+    background: #fff;
+  }
+  .input-wrap input.error { border-color: var(--error); }
+  .input-wrap .toggle-pw {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 16px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap .toggle-pw:hover { color: var(--text-secondary); }
+  .error-msg {
+    font-size: 0.77rem;
+    color: var(--error);
+    margin-top: 4px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  /* — phone row — */
+  .phone-wrap {
+    display: flex;
+    gap: 8px;
+  }
+  .phone-prefix {
+    width: 72px;
+    height: 44px;
+    padding: 0 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--input-bg);
+    font-family: 'Hind', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    outline: none;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .phone-input-wrap { flex: 1; }
+  .phone-input-wrap .input-wrap input { padding-left: 38px; }
+
+  /* — OTP section — */
+  .otp-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.75rem;
+  }
+  .otp-row input {
+    flex: 1;
+    height: 44px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--input-bg);
+    outline: none;
+    font-family: 'Baloo 2', cursive;
+    color: var(--green-800);
+    transition: border-color 0.2s;
+  }
+  .otp-row input:focus { border-color: var(--green-400); }
+  .otp-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .otp-hint a { color: var(--green-600); text-decoration: none; cursor: pointer; font-weight: 600; }
+
+  /* — divider — */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1.2rem 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* — social login — */
+  .social-btn {
+    width: 100%;
+    height: 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 0.6rem;
+  }
+  .social-btn:hover {
+    border-color: #aaa;
+    background: #fafafa;
+  }
+  .social-btn img { width: 20px; height: 20px; }
+
+  /* — submit button — */
+  .submit-btn {
+    width: 100%;
+    height: 48px;
+    background: var(--green-800);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+    margin-top: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .submit-btn:hover {
+    background: var(--green-600);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(39,80,10,0.3);
+  }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn.loading .btn-text { opacity: 0; }
+  .submit-btn .spinner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    display: none;
+    animation: spin 0.7s linear infinite;
+  }
+  .submit-btn.loading .spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* — remember / forgot row — */
+  .options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.6rem 0 0.2rem;
+  }
+  .remember-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+  }
+  .remember-wrap input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--green-600);
+    cursor: pointer;
+  }
+  .remember-wrap span {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+  }
+  .forgot-link {
+    font-size: 0.84rem;
+    color: var(--green-600);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .forgot-link:hover { text-decoration: underline; }
+
+  /* — terms — */
+  .terms-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0.5rem 0;
+  }
+  .terms-wrap input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: var(--green-600);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .terms-wrap span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .terms-wrap a { color: var(--green-600); text-decoration: none; font-weight: 600; }
+
+  /* — success banner — */
+  .success-banner {
+    background: var(--green-50);
+    border: 1.5px solid var(--green-200);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .success-banner.show { display: flex; }
+  .success-banner .success-icon { font-size: 2rem; }
+  .success-banner .success-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green-800);
+  }
+  .success-banner .success-sub { font-size: 0.85rem; color: var(--green-600); }
+
+  /* — tab panels — */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* — step indicator (for register) — */
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+  .step-dot {
+    width: 28px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .step-dot.active { background: var(--green-400); }
+  .step-dot.done { background: var(--green-600); }
+
+  /* — crop tags — */
+  .crop-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .crop-tag {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--input-bg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .crop-tag.selected {
+    border-color: var(--green-400);
+    background: var(--green-50);
+    color: var(--green-800);
+  }
+
+  /* — responsive — */
+  @media (max-width: 860px) {
+    .main-wrapper { grid-template-columns: 1fr; }
+    .panel-left { display: none; }
+    .panel-right { padding: 2rem 1.5rem; min-height: calc(100vh - 56px); }
+    .topbar-nav { display: none; }
+  }
+
+  /* — animations — */
+  .form-container {
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* step pages */
+  .reg-step { display: none; }
+  .reg-step.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- topbar -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <div class="logo-icon">🌾</div>
+    <div>
+      <span>MandiSystem</span>
+      <small>Agritech Platform</small>
+    </div>
+  </a>
+  <div class="topbar-nav">
+    <a href="index.html">Home</a>
+    <a href="mandiprices.html">Prices</a>
+    <a href="weather.html">Weather</a>
+    <a href="wholesaler.html">Wholesaler Login</a>
+  </div>
+</nav>
+
+<!-- main -->
+<div class="main-wrapper">
+
+  <!-- left panel -->
+  <div class="panel-left">
+    <div class="panel-heading">
+      <div class="welcome-tag">🌱 Farmer Portal</div>
+      <h1>Sell Smarter,<br/>Earn <span>Better</span></h1>
+      <p>Access live mandi prices, weather alerts, and connect directly with traders — all in one place.</p>
+
+      <ul class="features-list">
+        <li><div class="feat-icon">📊</div> Real-time mandi prices from 1000+ mandis</li>
+        <li><div class="feat-icon">🌦️</div> Weather alerts & crop advisories</li>
+        <li><div class="feat-icon">🤝</div> Direct connection with wholesale buyers</li>
+        <li><div class="feat-icon">💰</div> MSP info & government scheme updates</li>
+        <li><div class="feat-icon">🏷️</div> Live bidding — no middlemen</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">2.4L+</div>
+          <div class="stat-label">Farmers registered</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1000+</div>
+          <div class="stat-label">Mandis covered</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">₹18Cr</div>
+          <div class="stat-label">Trades this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- right panel -->
+  <div class="panel-right">
+    <div class="form-container">
+
+      <!-- tab switcher -->
+      <div class="tab-switcher" role="tablist">
+        <button class="tab-btn active" id="btn-login" onclick="switchTab('login')" role="tab">Login</button>
+        <button class="tab-btn" id="btn-register" onclick="switchTab('register')" role="tab">Register</button>
+      </div>
+
+      <!-- ===== LOGIN PANEL ===== -->
+      <div class="tab-panel active" id="panel-login">
+
+        <div class="success-banner" id="login-success">
+          <div class="success-icon">✅</div>
+          <div class="success-title">Welcome back, Kisaan!</div>
+          <div class="success-sub">Redirecting to your dashboard…</div>
+        </div>
+
+        <h2 class="form-title">Farmer Login</h2>
+        <p class="form-subtitle">New to MandiSystem? <a href="#" onclick="switchTab('register'); return false;">Create an account</a></p>
+
+        <div class="field-group">
+          <label for="login-phone">Mobile Number</label>
+          <div class="phone-wrap">
+            <input class="phone-prefix" value="+91" readonly />
+            <div class="phone-input-wrap">
+              <div class="input-wrap">
+                <span class="icon">📱</span>
+                <input type="tel" id="login-phone" maxlength="10" placeholder="9876543210" inputmode="numeric" />
+              </div>
+            </div>
+          </div>
+          <div class="error-msg" id="login-phone-err">Please enter a valid 10-digit mobile number.</div>
+        </div>
+
+        <div class="field-group">
+          <label for="login-pass">Password</label>
+          <div class="input-wrap">
+            <span class="icon">🔒</span>
+            <input type="password" id="login-pass" placeholder="Enter your password" />
+            <button class="toggle-pw" onclick="togglePw('login-pass', this)" type="button" title="Show/hide password">👁️</button>
+          </div>
+          <div class="error-msg" id="login-pass-err">Password is required.</div>
+        </div>
+
+        <div class="options-row">
+          <label class="remember-wrap">
+            <input type="checkbox" id="remember-me" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button class="submit-btn" id="login-btn" onclick="handleLogin()">
+          <span class="btn-text">Login to Dashboard →</span>
+          <div class="spinner"></div>
+        </button>
+
+        <div class="or-divider">or continue with</div>
+
+        <button class="social-btn" onclick="socialLogin('google')">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.2l6.8-6.8C35.5 2.2 30.1 0 24 0 14.7 0 6.7 5.4 2.7 13.3l7.9 6.1C12.6 13 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.1.8-4.6l-7.9-6.1C1 16.5 0 20.1 0 24s1 7.5 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.1 0 11.2-2 14.9-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.4 2.2-6.1 0-11.3-4.1-13.2-9.7l-7.9 6.1C6.7 42.6 14.7 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+
+      </div>
+
+      <!-- ===== REGISTER PANEL ===== -->
+      <div class="tab-panel" id="panel-register">
+
+        <div class="success-banner" id="reg-success">
+          <div class="success-icon">🌾</div>
+          <div class="success-title">Account Created!</div>
+          <div class="success-sub">Welcome to the MandiSystem family. Redirecting…</div>
+        </div>
+
+        <!-- step dots -->
+        <div class="step-indicator">
+          <div class="step-dot active" id="sdot-1"></div>
+          <div class="step-dot" id="sdot-2"></div>
+          <div class="step-dot" id="sdot-3"></div>
+        </div>
+
+        <!-- STEP 1: basic info -->
+        <div class="reg-step active" id="reg-step-1">
+          <h2 class="form-title">Create Account</h2>
+          <p class="form-subtitle">Already a member? <a href="#" onclick="switchTab('login'); return false;">Login here</a></p>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="reg-fname">First Name</label>
+              <div class="input-wrap">
+                <span class="icon">👤</span>
+                <input type="text" id="reg-fname" placeholder="Ramesh" />
+              </div>
+              <div class="error-msg" id="reg-fname-err">Required.</div>
+            </div>
+            <div class="field-group">
+              <label for="reg-lname">Last Name</label>
+              <div class="input-wrap">
+                <span class="icon">👤</span>
+                <input type="text" id="reg-lname" placeholder="Kumar" />
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="reg-phone">Mobile Number</label>
+            <div class="phone-wrap">
+              <input class="phone-prefix" value="+91" readonly />
+              <div class="phone-input-wrap">
+                <div class="input-wrap">
+                  <span class="icon">📱</span>
+                  <input type="tel" id="reg-phone" maxlength="10" placeholder="9876543210" inputmode="numeric" />
+                </div>
+              </div>
+            </div>
+            <div class="error-msg" id="reg-phone-err">Enter valid 10-digit number.</div>
+          </div>
+
+          <div class="field-group">
+            <label for="reg-pass">Password</label>
+            <div class="input-wrap">
+              <span class="icon">🔒</span>
+              <input type="password" id="reg-pass" placeholder="Min 8 characters" />
+              <button class="toggle-pw" onclick="togglePw('reg-pass', this)" type="button" title="Show/hide">👁️</button>
+            </div>
+            <div class="error-msg" id="reg-pass-err">Password must be at least 8 characters.</div>
+          </div>
+
+          <button class="submit-btn" onclick="goToStep(2)">
+            <span class="btn-text">Continue →</span>
+          </button>
+        </div>
+
+        <!-- STEP 2: farm details -->
+        <div class="reg-step" id="reg-step-2">
+          <h2 class="form-title">Farm Details</h2>
+          <p class="form-subtitle" style="margin-bottom:1rem">Tell us about your farm</p>
+
+          <div class="field-group">
+            <label for="reg-state">State</label>
+            <div class="input-wrap">
+              <span class="icon">📍</span>
+              <select id="reg-state" onchange="loadDistricts()">
+                <option value="">Select State</option>
+                <option>Bihar</option>
+                <option>Uttar Pradesh</option>
+                <option>Madhya Pradesh</option>
+                <option>Rajasthan</option>
+                <option>Maharashtra</option>
+                <option>Punjab</option>
+                <option>Haryana</option>
+                <option>Gujarat</option>
+                <option>Karnataka</option>
+                <option>Andhra Pradesh</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="reg-district">District / Mandi</label>
+            <div class="input-wrap">
+              <span class="icon">🏘️</span>
+              <input type="text" id="reg-district" placeholder="e.g. Nalanda, Patna" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="reg-land">Land Area</label>
+              <div class="input-wrap">
+                <span class="icon">🌱</span>
+                <input type="number" id="reg-land" placeholder="5" min="0" step="0.5" />
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="reg-unit">Unit</label>
+              <div class="input-wrap">
+                <span class="icon">📐</span>
+                <select id="reg-unit">
+                  <option>Acres</option>
+                  <option>Bigha</option>
+                  <option>Hectare</option>
+                  <option>Katha</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Primary Crops</label>
+            <div class="crop-tags" id="crop-tag-list">
+              <span class="crop-tag" onclick="toggleCrop(this)">🌾 Wheat</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🌽 Maize</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🍅 Tomato</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🧅 Onion</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🥔 Potato</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🌶️ Chili</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🌿 Dhaniya</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🌻 Mustard</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🫘 Gram</span>
+              <span class="crop-tag" onclick="toggleCrop(this)">🍚 Paddy</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:1rem">
+            <button class="submit-btn" style="background:#f2ede2;color:var(--green-800);box-shadow:none;" onclick="goToStep(1)">
+              <span class="btn-text">← Back</span>
+            </button>
+            <button class="submit-btn" onclick="goToStep(3)">
+              <span class="btn-text">Continue →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: verify OTP -->
+        <div class="reg-step" id="reg-step-3">
+          <h2 class="form-title">Verify Mobile</h2>
+          <p class="form-subtitle">An OTP has been sent to <strong id="otp-phone-display">+91 XXXXXXXXXX</strong></p>
+
+          <div class="field-group">
+            <label>Enter 6-digit OTP</label>
+            <div class="otp-row">
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,0)" />
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,1)" />
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,2)" />
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,3)" />
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,4)" />
+              <input type="text" maxlength="1" class="otp-input" inputmode="numeric" oninput="otpNext(this,5)" />
+            </div>
+            <div class="otp-hint">Didn't receive? <a onclick="resendOTP()">Resend OTP</a> &nbsp;|&nbsp; <span id="otp-timer">Resend in 30s</span></div>
+          </div>
+
+          <div class="terms-wrap" style="margin-top:1rem">
+            <input type="checkbox" id="terms-check" />
+            <span>I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a> of MandiSystem.</span>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:0.8rem">
+            <button class="submit-btn" style="background:#f2ede2;color:var(--green-800);box-shadow:none;" onclick="goToStep(2)">
+              <span class="btn-text">← Back</span>
+            </button>
+            <button class="submit-btn" id="reg-submit-btn" onclick="handleRegister()">
+              <span class="btn-text">Create Account ✓</span>
+              <div class="spinner"></div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <!-- end register panel -->
+
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---- tab switching ---- */
+  function switchTab(tab) {
+    ['login','register'].forEach(t => {
+      document.getElementById('panel-' + t).classList.toggle('active', t === tab);
+      document.getElementById('btn-' + t).classList.toggle('active', t === tab);
+    });
+  }
+
+  /* ---- password toggle ---- */
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+    else { inp.type = 'password'; btn.textContent = '👁️'; }
+  }
+
+  /* ---- social ---- */
+  function socialLogin(provider) {
+    alert('Google login integration coming soon!\n\nThis requires a backend with OAuth2.');
+  }
+
+  /* ---- login handler ---- */
+  function handleLogin() {
+    const phone = document.getElementById('login-phone').value.trim();
+    const pass  = document.getElementById('login-pass').value.trim();
+    let valid = true;
+
+    if (!/^\d{10}$/.test(phone)) {
+      document.getElementById('login-phone-err').classList.add('show'); valid = false;
+    } else { document.getElementById('login-phone-err').classList.remove('show'); }
+
+    if (!pass) {
+      document.getElementById('login-pass-err').classList.add('show'); valid = false;
+    } else { document.getElementById('login-pass-err').classList.remove('show'); }
+
+    if (!valid) return;
+
+    const btn = document.getElementById('login-btn');
+    btn.classList.add('loading');
+
+    // Simulate API call
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.getElementById('login-success').classList.add('show');
+      // In real app: redirect to farmer dashboard
+      // window.location.href = 'farmer-dashboard.html';
+    }, 1800);
+  }
+
+  /* ---- multi-step register ---- */
+  let currentStep = 1;
+
+  function goToStep(n) {
+    if (n > currentStep && !validateStep(currentStep)) return;
+
+    document.getElementById('reg-step-' + currentStep).classList.remove('active');
+    document.getElementById('reg-step-' + n).classList.add('active');
+
+    // update dots
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById('sdot-' + i);
+      dot.classList.toggle('active', i === n);
+      dot.classList.toggle('done', i < n);
+    }
+
+    if (n === 3) {
+      const ph = document.getElementById('reg-phone').value;
+      document.getElementById('otp-phone-display').textContent = '+91 ' + ph;
+      startOTPTimer();
+    }
+
+    currentStep = n;
+  }
+
+  function validateStep(step) {
+    if (step === 1) {
+      const fn   = document.getElementById('reg-fname').value.trim();
+      const ph   = document.getElementById('reg-phone').value.trim();
+      const pass = document.getElementById('reg-pass').value.trim();
+      let ok = true;
+      if (!fn)                { document.getElementById('reg-fname-err').classList.add('show'); ok = false; }
+      else                    { document.getElementById('reg-fname-err').classList.remove('show'); }
+      if (!/^\d{10}$/.test(ph)) { document.getElementById('reg-phone-err').classList.add('show'); ok = false; }
+      else                    { document.getElementById('reg-phone-err').classList.remove('show'); }
+      if (pass.length < 8)    { document.getElementById('reg-pass-err').classList.add('show'); ok = false; }
+      else                    { document.getElementById('reg-pass-err').classList.remove('show'); }
+      return ok;
+    }
+    return true;
+  }
+
+  /* ---- crop tag toggle ---- */
+  function toggleCrop(el) {
+    el.classList.toggle('selected');
+  }
+
+  /* ---- OTP box navigation ---- */
+  function otpNext(inp, idx) {
+    inp.value = inp.value.replace(/\D/g,'');
+    const inputs = document.querySelectorAll('.otp-input');
+    if (inp.value && idx < 5) inputs[idx + 1].focus();
+  }
+
+  /* ---- OTP timer ---- */
+  let timerInterval;
+  function startOTPTimer() {
+    clearInterval(timerInterval);
+    let s = 30;
+    document.getElementById('otp-timer').textContent = 'Resend in ' + s + 's';
+    timerInterval = setInterval(() => {
+      s--;
+      if (s <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('otp-timer').textContent = '';
+      } else {
+        document.getElementById('otp-timer').textContent = 'Resend in ' + s + 's';
+      }
+    }, 1000);
+  }
+
+  function resendOTP() {
+    startOTPTimer();
+    alert('OTP resent to your mobile number!');
+  }
+
+  /* ---- register submit ---- */
+  function handleRegister() {
+    const otp = [...document.querySelectorAll('.otp-input')].map(i => i.value).join('');
+    if (otp.length < 6) { alert('Please enter the complete 6-digit OTP.'); return; }
+    if (!document.getElementById('terms-check').checked) { alert('Please agree to the Terms & Conditions.'); return; }
+
+    const btn = document.getElementById('reg-submit-btn');
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.getElementById('reg-success').classList.add('show');
+      // In real app: redirect to onboarding/dashboard
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
